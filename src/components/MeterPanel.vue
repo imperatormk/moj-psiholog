@@ -1,15 +1,20 @@
 <template>
   <div class="meterPanel">
     <h1>{{ msg }}</h1>
-    <device v-for="slotObj in meter.slots" :key="slotObj.id" :slotObj="slotObj" :meterId="meter.id" />
-    <div>
-      <p>Refresh interval</p>
-      <select v-model="refreshInterval" @change="setTimer()">
-        <option value="5000" selected>5s</option>
-        <option value="10000">10s</option>
-        <option value="30000">30s</option>
-      </select>
+    <div v-if="hasSlots()">
+      <div>
+        <p>Refresh interval</p>
+        <select v-model="refreshInterval" @change="setTimer()">
+          <option value="5000" selected>5s</option>
+          <option value="10000">10s</option>
+          <option value="30000">30s</option>
+        </select>
+      </div>
+      <device v-for="slotObj in meter.slots" :key="slotObj.id" :slotObj="slotObj" :meterId="meter.id" />
     </div>
+    <div v-if="!hasSlots()">
+      <h2>That's a 404</h2>
+    </div>  
   </div>
 </template>
 
@@ -104,8 +109,12 @@ export default {
     }
   },
   methods: {
+    hasSlots() {
+      return this.meter && this.meter.slots && this.meter.slots.length > 0;
+    },
     reinitMeter() {
-      var url = 'https://thatsmontreal.ca/smartplug/api/getMeter.php?meterId=1';
+      var meterId = this.$route.params.id;
+      var url = 'https://thatsmontreal.ca/smartplug/api/getMeter.php?meterId=' + meterId;
 
       restResourceService.sendGet(url)
       .then(response => response.json())
@@ -114,7 +123,7 @@ export default {
           this.meter.slots.map(slot => {
             var slotNew = meter.slots.find(newSlot => newSlot.id === slot.id);
             if (slotNew) {
-              slot.device.lastState = slotNew.device.lastState;
+              slot.lastState = slotNew.lastState;
             }
           })
         } else {
@@ -135,6 +144,15 @@ export default {
   },
   components: {
     Device
+  },
+  watch: {
+    '$route' (to, from) {
+      if (from.params.id !== to.params.id) {
+        this.stopTimer();
+        this.reinitMeter();
+        this.setTimer();
+      }
+    }
   },
   beforeDestroy() {
     this.stopTimer()

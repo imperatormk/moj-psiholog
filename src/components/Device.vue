@@ -2,12 +2,15 @@
   <div class="device">
     <h3>{{ slotObj.device | fixBlank }}</h3>
     <div v-if="!isBlank()">
-      <p>{{ slotObj.device | fixNoState }}</p>
+      <p>{{ slotObj | fixNoState }}</p>
       <button @click="deleteDevice(slotObj)">Delete device</button>
     </div>
     <br>
     <input @keyup.enter="persistDevice()" v-model="cloneSlot.device.deviceName"/>
     <button @click="persistDevice()">{{ isNew() ? "Add" : "Update" }}</button>
+    <div v-if="!isBlank()">
+      <canvas ref="canvas"></canvas>
+    </div>
   </div>
 </template>
 
@@ -16,9 +19,13 @@
 import RestResource from '../services/RestResource'
 import { EventBus } from '../services/EventBus'
 
+import VueCharts from 'vue-chartjs'
+import { Line } from 'vue-chartjs'
+
 const restResourceService = new RestResource();
 
 export default {
+  extends: Line,
   name: 'device',
   props: {
     slotObj: { type: Object, required: true},
@@ -26,6 +33,9 @@ export default {
   },
   beforeMount() {
     this.reinitComp(this.slotObj);
+  },
+  mounted() {
+    this.renderGraph();
   },
   watch: {
       slotObj: {
@@ -40,12 +50,28 @@ export default {
       if (!device.deviceName) return '-- Blank slot --';
       return device.deviceName;
     },
-    fixNoState: function (device) {
-      if (!device.lastState) return '-- No states --';
-      return 'Last state: ' + device.lastState.state + ' @ ' + device.lastState.dateRecorded;
+    fixNoState: function (slot) {
+      if (!slot.lastState) return '-- No states --';
+      return 'Last state: ' + slot.lastState.state + ' @ ' + slot.lastState.dateRecorded;
     }
   },
   methods: {
+    renderGraph() {
+      this.slotObj.todayState.map((key, index) => {
+          this.slotObj.todayState[index].statTime = (this.slotObj.todayState[index]).statTime.split(';')[0];
+      });
+
+      this.renderChart({
+        labels: this.slotObj.todayState.map(x => x.statTime + 'h'),
+        datasets: [
+          {
+            label: 'Power consumption',
+            backgroundColor: '#f87979',
+            data: this.slotObj.todayState.map(x => x.stat)
+          }
+        ]
+      })
+    },
     reinitComp(slotObj) {
       if (!this.cloneSlot.id) {
         this.cloneSlot = JSON.parse(JSON.stringify(slotObj));
