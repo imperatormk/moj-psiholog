@@ -1,4 +1,4 @@
-# test-proj
+# Moj Psiholog
 
 > A Vue.js project
 
