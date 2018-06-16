@@ -6,8 +6,17 @@
 </template>
 
 <script>
+
+import Vue from 'vue'
+import apis from '@/services/api'
+
 export default {
-  name: 'App'
+  name: 'App',
+  created() {
+    Vue.prototype.$api = {
+      ...apis()
+    }
+  }
 }
 </script>
 
