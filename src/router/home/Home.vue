@@ -7,9 +7,18 @@
 </template>
 <script>
 
+import MessageBus from '@/services/messageBus'
 import Doctor from '@/components/Doctor'
 
 export default {
+  created() {
+    MessageBus.$on('wsConnected', () => {
+      console.log('wsConnected')
+    })
+  },
+  destroyed() {
+    MessageBus.$off('wsConnected')
+  },
   data: () => ({
     
   }),
