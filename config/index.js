@@ -12,7 +12,8 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api': {
-        target: 'http://thatsmontreal.ca',
+        target: 'https://173.249.47.125:3002',
+      	secure: false,
         changeOrigin: true
       }
     },

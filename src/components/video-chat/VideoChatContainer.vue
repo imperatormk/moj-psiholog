@@ -41,8 +41,7 @@ export default {
   methods: {
     initSession() {
       if (!this.isExistingSession) {
-        fetch(this.$config.SERVER_BASE_URL + '/session')
-          .then((data) => data.json())
+        this.$api.generateChatToken()
           .then((data) => {
             this.sessionData = data
             this.started = true

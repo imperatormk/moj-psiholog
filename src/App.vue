@@ -9,17 +9,12 @@
 
 import Vue from 'vue'
 import apis from '@/services/api'
-import config from '@/config.js'
 
 export default {
   name: 'App',
   created() {
     Vue.prototype.$api = {
       ...apis()
-    }
-
-    Vue.prototype.$config = {
-      ...config
     }
   }
 }
