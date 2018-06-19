@@ -34,6 +34,7 @@ export default {
     },
   },
   created () {
+    console.log(OT)
     this.session = OT.initSession(this.apiKey, this.sessionId);
     this.session.connect(this.token, (err) => {
       if (err) {
@@ -49,6 +50,9 @@ export default {
         this.streams.splice(idx, 1);
       }
     });
+  },
+  beforeDestroy() {
+    this.session.disconnect()
   },
   data: () => ({
     streams: [],

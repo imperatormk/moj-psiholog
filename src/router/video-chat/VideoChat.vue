@@ -5,13 +5,18 @@
     <div v-if="connected">
       <p>Video Chat</p>
       <p>My ID: {{ patientId }}</p>
+      <div style="background:red;height:50%;width:50%;" v-if="pendingCall">
+        <h1>You are being called...</h1>
+        <button @click="acceptCall">Accept</button>
+      </div>
       <VideoChatContainer v-if="established" :sessionDataProp="sessionData" />
     </div>
+    <button @click="disconnect">Disconnect</button>
   </div>
   <div v-if="type==='doctor'">
     <div v-if="connected">
       <VideoChatContainer @sessionCreated="storeSession($event)" />
-      <div v-for="patient in patientArr" :key="patient.patientId">
+      <div v-for="patient in patientList" :key="patient.patientId">
         {{ patient.patientId }}
         <button @click="callPatient(patient)">Call</button>
       </div><br>
@@ -32,23 +37,30 @@ export default {
     connected: false,
     type: '',
     established: false,
-    patientArr: [],
-    sessionData: null
+    patientList: [],
+    sessionData: null,
+    pendingCall: false
   }),
   methods: {
     connect() {
-      console.log('connected')
       this.connected = true
       this.initEvents()
+    },
+    disconnect() {
+      this.connected = false
+      if (this.type === 'patient') {
+        this.emitEvent('patientDisconnect', { patientId: this.patientId })
+      }
     },
     initEvents() {
       if (this.type === 'patient') {
         const patientId = `patient-${Math.floor(Math.random() * 100) + 1}`
         this.patientId = patientId
         this.subscribe('callInvite', this.callInvite)
-        this.emitEvent('newPatient', { patientId })
+        this.emitEvent('patientConnect', { patientId })
       } else if (this.type === 'doctor') {
         this.onEvent('getPatients', this.getPatients)
+        this.subscribe('patientAction', this.onPatientAction)
         this.emitEvent('getPatients')
       }
     },
@@ -56,20 +68,29 @@ export default {
     callInvite(callData) {
       if (callData.patient.patientId === this.patientId) {
         console.log('callInvite', callData.sessionData)
-        this.sessionData = callData.sessionData
-        this.established = true
+        this.pendingCall = callData
       }
     },
     acceptCall() {
       this.emitEvent('acceptCall', { patientId: this.patientId })
+      this.sessionData = this.pendingCall.sessionData // hmm refactor
+      this.pendingCall = null
+      this.established = true
     },
     // doctor fns
     storeSession(sessionData) {
       this.sessionData = sessionData
     },
     getPatients(patients) {
-      this.patientArr = patients
+      this.patientList = patients
     },
+    onPatientAction(actionData) {
+      if (actionData.event === 'connected') {
+        this.patientList.push(actionData.patient)
+      } else if (actionData.event === 'disconnected') {
+        this.patientList = this.patientList.filter(patientObj => (patientObj.patientId !== actionData.patient.patientId))
+      }
+    }, 
     callPatient(patient) {
       this.emitEvent('callPatient', {
         patient,
