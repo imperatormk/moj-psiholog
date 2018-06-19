@@ -1,9 +1,6 @@
 <template>
   <div>
     <p>Doctor Details</p>
-    <b-button size="sm" variant="danger">
-        <span class="bg-black">Mrkss</span>
-    </b-button>
   </div>
 </template>
 <script>

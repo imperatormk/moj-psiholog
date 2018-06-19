@@ -10,8 +10,8 @@
         <button @click="acceptCall">Accept</button>
       </div>
       <VideoChatContainer v-if="established" :sessionDataProp="sessionData" />
+      <button @click="disconnect">Disconnect</button>
     </div>
-    <button @click="disconnect">Disconnect</button>
   </div>
   <div v-if="type==='doctor'">
     <div v-if="connected">
