@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import Session from '@/components/video-chat/Session.vue'
+import Session from '@/components/video-chat/Session'
 
 export default {
   props: {
