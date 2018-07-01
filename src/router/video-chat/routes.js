@@ -1,8 +1,7 @@
-import VideoChat from './VideoChat'
+import VideoChatPage from './VideoChatPage'
 
 export default [{
-  path: '/video-chat/:type',
+  path: '/video-chat',
   name: 'video-chat',
-  component: VideoChat,
-  props: true
+  component: VideoChatPage
 }]

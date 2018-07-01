@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import OT from '@opentok/client';
+import OT from '@opentok/client'
 
 export default {
   name: 'publisher',
@@ -20,27 +20,27 @@ export default {
   mounted: function() {
     const publisher = OT.initPublisher(this.$el, this.opts, (err) => {
       if (err) {
-        this.$emit('error', err);
+        this.$emit('error', err)
       } else {
-        this.$emit('publisherCompleted');
+        this.$emit('publisherCompleted')
       }
-    });
-    this.$emit('publisherCreated', publisher);
+    })
+    this.$emit('publisherCreated', publisher)
     const publish = () => {
       this.session.publish(publisher, (err) => {
         if (err) {
-          this.$emit('error', err);
+          this.$emit('error', err)
         } else {
-          this.$emit('publisherConnected', publisher);
+          this.$emit('publisherConnected', publisher)
         }
-      });
-    };
+      })
+    }
     if (this.session && this.session.isConnected()) {
-      publish();
+      publish()
     }
     if (this.session) {
-      this.session.on('sessionConnected', publish);
+      this.session.on('sessionConnected', publish)
     }
   }
-};
+}
 </script>

@@ -6,9 +6,9 @@ import 'vuetify/dist/vuetify.css'
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import store from './store'
+import mixins from './services/mixins'
 import axios from 'axios'
-
-import socket from '@/services/ws'
 
 import VueSocketCluster from 'vue-socket-cluster'
 import Vuetify from 'vuetify'
@@ -28,6 +28,7 @@ Vue.use(VueSocketCluster, {
 })
 
 Vue.use(Vuetify)
+Vue.mixin(mixins.SocketMixin) // global mixin
 
 /* eslint-disable no-new */
 new Vue({
@@ -36,5 +37,6 @@ new Vue({
   components: { App },
   template: '<App/>',
   axios,
-  ...socket,
+  store,
+  mixins: [mixins.AuthMixin] // this mixin has to be registered
 })

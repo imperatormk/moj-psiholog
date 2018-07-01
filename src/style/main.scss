@@ -11,8 +11,6 @@
 }
 .font-paragraph {
   font-family: 'Courier New', Courier, monospace;
-  display: block;
-  padding: 10px;
 }
 .uppercase {
   text-transform: uppercase;
@@ -42,16 +40,22 @@
 .self-end {
   align-self: flex-end;
 }
+.space-between {
+  justify-content: space-between;
+}
 .space-around {
   justify-content: space-around;
 }
 .justify-center {
   justify-content: center;
 }
+.justify-end {
+  justify-content: flex-end;
+}
 .align-center {
   align-items: center;
 }
-.card {
+.cardy {
   width: 20%;
   background: white;
   margin: 10px;
@@ -63,9 +67,27 @@
   border-right: 5px solid #9bc03c;
 }
 // .m5, .m10...
-@for $i from 1 through 20 {
+@for $i from 1 through 40 {
   .m#{$i * 5} {
     margin: $i * 5px
+  }
+}
+// .p5-side, .p10-side...
+@for $i from 1 through 20 {
+  .p#{$i * 5}#{-side} {
+    padding: 0 $i * 5px
+  }
+}
+// .p5-top, .p10-top...
+@for $i from 1 through 20 {
+  .p#{$i * 5}#{-top} {
+    padding: $i * 5px 0 0 0
+  }
+}
+// .p5-ver, .p10-ver...
+@for $i from 1 through 20 {
+  .p#{$i * 5}#{-ver} {
+    padding: $i * 5px 0
   }
 }
 // .p5, .p10...
@@ -75,21 +97,21 @@
   }
 }
 // .h5, .h10...
-@for $i from 1 through 20 {
-  .h#{$i * 5} {
-    height: $i * 5%
+@for $i from 1 through 100 {
+  .h#{$i * 1} {
+    height: $i * 1%
   }
 }
 // .w5, .w10...
-@for $i from 1 through 20 {
-  .w#{$i * 5} {
-    width: $i * 5%
+@for $i from 1 through 100 {
+  .w#{$i * 1} {
+    width: $i * 1%
   }
 }
 // .section10
-@for $i from 1 through 20 {
-  .section#{$i * 10} {
-    height: $i * 10vh
+@for $i from 1 through 40 {
+  .section#{$i * 5} {
+    height: $i * 5vh
   }
 }
 // .fs1, fs7
@@ -118,4 +140,25 @@
 }
 .input-icon {
   border-radius: 0 10px 10px 0;
+}
+.no-focus {
+  outline-width: 0
+}
+.hoverable {
+  cursor: pointer;
+}
+.tiny-border {
+  border: 1px solid gray;
+}
+// .z500
+@for $i from 0 through 99 {
+  .z#{$i * 1000} {
+    z-index: $i * 1000
+  }
+}
+.italic {
+  font-style: italic;
+}
+.border-right {
+  border-right: 5px solid #9bc03c;
 }

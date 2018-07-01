@@ -1,12 +1,9 @@
-<template>
-  <div>
-    <div v-if="!started">
-      <button @click="initSession()">Start</button>
-    </div>
-    <div v-else>
-      <Session :apiKey="sessionData.apiKey" :sessionId="sessionData.sessionId" :token="sessionData.token" />
-    </div>
-  </div>
+<template lang="pug">
+  div
+    .p10(v-if="!started")
+      h3 Establishing connection...
+    div(v-else)
+      Session(:apiKey="sessionData.apiKey" :sessionId="sessionData.sessionId" :token="sessionData.token")
 </template>
 
 <script>
@@ -14,11 +11,14 @@ import Session from '@/components/video-chat/Session'
 
 export default {
   props: {
-    sessionDataProp: null
+    videoSessionDataProp: {
+      type: Object,
+      default: null
+    }
   },
   created() {
-    if (this.sessionDataProp) {
-      this.sessionData = { ...this.sessionDataProp }
+    if (this.videoSessionDataProp) {
+      this.sessionData = { ...this.videoSessionDataProp }
     }
     this.initSession()
   },

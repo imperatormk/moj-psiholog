@@ -7,6 +7,12 @@ export default function () {
         .then((resp) => {
           return resp.data
         })
+    },
+    getSessions(userId) {
+      return http.api.get(`users/${userId}/sessions`)
+        .then((resp) => {
+          return resp.data
+        })
     }
   }
 }

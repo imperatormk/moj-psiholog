@@ -1,7 +1,7 @@
-import DoctorDetails from './DoctorDetails'
+import DoctorDetailsPage from './DoctorDetailsPage'
 
 export default [{
-  path: '/doctors/:id/',
+  path: '/doctors/:id',
   name: 'details',
-  component: DoctorDetails
+  component: DoctorDetailsPage
 }]

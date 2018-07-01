@@ -1,6 +1,6 @@
 <template>
   <div id="session" @error="errorHandler">
-    <publisher :session="session" @error="errorHandler"></publisher>
+    <publisher :opts="getOpts" :session="session" @error="errorHandler"></publisher>
     <div id="subscribers" v-for="stream in streams" :key="stream.streamId">
       <subscriber @error="errorHandler" :stream="stream" :session="session"></subscriber>
     </div>
@@ -8,13 +8,13 @@
 </template>
 
 <script>
-import OT from '@opentok/client';
-import Publisher from './Publisher.vue';
-import Subscriber from './Subscriber.vue';
+import OT from '@opentok/client'
+import Publisher from './Publisher.vue'
+import Subscriber from './Subscriber.vue'
 
 const errorHandler = (err) => {
-  alert(err.message);
-};
+  alert(err.message)
+}
 
 export default {
   name: 'session',
@@ -34,22 +34,21 @@ export default {
     },
   },
   created () {
-    console.log(OT)
-    this.session = OT.initSession(this.apiKey, this.sessionId);
+    this.session = OT.initSession(this.apiKey, this.sessionId)
     this.session.connect(this.token, (err) => {
       if (err) {
-        errorHandler(err);
+        errorHandler(err)
       }
-    });
+    })
     this.session.on('streamCreated', (event) => {
-      this.streams.push(event.stream);
-    });
+      this.streams.push(event.stream)
+    })
     this.session.on('streamDestroyed', (event) => {
-      const idx = this.streams.indexOf(event.stream);
+      const idx = this.streams.indexOf(event.stream)
       if (idx > -1) {
-        this.streams.splice(idx, 1);
+        this.streams.splice(idx, 1)
       }
-    });
+    })
   },
   beforeDestroy() {
     this.session.disconnect()
@@ -60,15 +59,23 @@ export default {
   }),
   methods: {
     errorHandler
+  },
+  computed: {
+    getOpts() {
+      return {
+        width: 500,
+        height: 300
+      }
+    }
   }
-};
+}
 </script>
 
 <style>
   .OT_subscriber {
-    float: left;
+    float: left
   }
   .OT_publisher {
-    float: left;
+    float: left
   }
 </style>
