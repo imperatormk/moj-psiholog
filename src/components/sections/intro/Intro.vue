@@ -14,7 +14,7 @@
               span Lorem Ipsum is simply dummy text of the printing and typesetting industry.
               span Lorem Ipsum is simply dummy text of the printing and typesetting industry.
     v-flex(xs12 sm12 md6)
-      v-parallax(src="static/doctor1.jpg")
+      v-parallax.h100(src="static/doctor1.jpg")
         .flex-row.align-center.justify-center.text-left
           .intro-card.flex-col.space-around
             span.uppercase.font-title Book an appointment

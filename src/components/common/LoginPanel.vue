@@ -1,8 +1,8 @@
 <template lang="pug">
   .flex-col.space-around.align-center.m200.p20.tiny-border
     h1 Login
-    v-text-field(v-model="creds.email" placeholder="Email")
-    v-text-field(v-model="creds.password" type="password" placeholder="Password")
+    v-text-field.w100(v-model="creds.email" placeholder="Email")
+    v-text-field.w100(v-model="creds.password" type="password" placeholder="Password")
     v-btn(@click="login") Login
 </template>
 

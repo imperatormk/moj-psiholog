@@ -65,7 +65,7 @@ export default {
 </script>
 
 <style lang="scss">
-  .dialog__content {
+  .v-dialog__content {
     background: black;
     opacity: 0.9;
   }
