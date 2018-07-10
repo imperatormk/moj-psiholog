@@ -20,11 +20,11 @@
             span.uppercase.font-title Book an appointment
             span.p10.font-paragraph(style="display:block;") Enter your email address to get started. First session free!
             .flex-row.input-box-container
-              input.no-focus.input-box.italic(placeholder="Email")
+              input.no-focus.input-box.italic(placeholder="Email" v-model="email")
               .input-icon.flex-row.align-center.justify-center(style="width:50px;")
                 v-icon(color="gray") add
             .flex-row.justify-start
-              v-btn(color="light-green") Submit Now
+              v-btn(color="light-green" @click="createAccount") Submit Now
 </template>
 
 <script>
@@ -41,7 +41,17 @@ export default {
     }, 5000)
   },
   data: () => ({
+    email: '',
     visible: true
-  })
+  }),
+  methods: {
+    createAccount() {
+      const email = this.email.trim()
+      if (email) {
+        this.$api.createAccount({ email })
+          .then(res => console.log(res))
+      }
+    }
+  }
 }
 </script>
