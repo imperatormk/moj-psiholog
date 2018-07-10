@@ -22,7 +22,7 @@
             .flex-row.input-box-container
               input.no-focus.input-box.italic(placeholder="Email" v-model="email")
               .input-icon.flex-row.align-center.justify-center(style="width:50px;")
-                v-icon(color="gray") add
+                v-icon(color="gray") airplay
             .flex-row.justify-start
               v-btn(color="light-green" @click="createAccount") Submit Now
 </template>
