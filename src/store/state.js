@@ -1,4 +1,5 @@
 export default {
   authData: null,
-  isConnected: false
+  isConnected: false,
+  pendingPurchase: null
 }

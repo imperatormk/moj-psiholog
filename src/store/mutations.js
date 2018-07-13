@@ -5,6 +5,9 @@ const LOGOUT = 'LOGOUT'
 
 const CONNECT = 'CONNECT'
 
+const PEND_PURCHASE = 'PEND_PURCHASE'
+const CLEAR_PENDING_PURCHASE = 'CLEAR_PENDING_PURCHASE'
+
 export default {
   [LOGIN] (state) {
     state.loginPending = true
@@ -21,5 +24,11 @@ export default {
   },
   [CONNECT](state) {
     state.isConnected = true
-  }
+  },
+  [PEND_PURCHASE] (state, purchaseData) {
+    state.pendingPurchase = purchaseData
+  },
+  [CLEAR_PENDING_PURCHASE] (state) {
+    state.pendingPurchase = null
+  },
 }

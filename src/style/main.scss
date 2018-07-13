@@ -46,14 +46,27 @@
 .space-around {
   justify-content: space-around;
 }
+.justify-start {
+  justify-content: flex-start;
+}
 .justify-center {
   justify-content: center;
 }
 .justify-end {
   justify-content: flex-end;
 }
+.align-start {
+  align-items: flex-start;
+}
 .align-center {
   align-items: center;
+}
+.align-end {
+  align-items: flex-end;
+}
+.center {
+  align-items: center;
+  justify-content: center;
 }
 .cardy {
   width: 20%;
@@ -72,10 +85,27 @@
     margin: $i * 5px
   }
 }
+@for $i from 1 through 20 {
+  .flex-#{$i * 1} {
+    flex-grow: $i * 1
+  }
+}
 // .p5-side, .p10-side...
 @for $i from 1 through 20 {
   .p#{$i * 5}#{-side} {
     padding: 0 $i * 5px
+  }
+}
+// .p5-left, .p10-left...
+@for $i from 1 through 20 {
+  .p#{$i * 5}#{-left} {
+    padding-left: $i * 5px
+  }
+}
+// .p5-right, .p10-right...
+@for $i from 1 through 20 {
+  .p#{$i * 5}#{-right} {
+    padding-right: $i * 5px
   }
 }
 // .p5-top, .p10-top...
@@ -120,6 +150,11 @@
     font-size: $i * 1px
   }
 }
+@for $i from 1 through 50 {
+  .br#{$i * 1} {
+    border-radius: $i * 1px
+  }
+}
 .text-left {
   text-align: left;
 }
@@ -161,4 +196,10 @@
 }
 .border-right {
   border-right: 5px solid #9bc03c;
+}
+.defaultw {
+  width: initial !important;
+}
+.no-margin {
+  margin: 0px;
 }

@@ -6,7 +6,8 @@
       .p10.tiny-border
         .flex-row
           .p5-side(v-for="(availableTime, index) in availableTimes" :key="index")
-            .tiny-border.p5.hoverable {{ availableTime.hour }}:{{ availableTime.minute }}
+            v-chip.hoverable(@click="appointmentPicked(availableTime)")
+              span.hoverable {{ availableTime.hour }}:{{ availableTime.minute }}
 </template>
 
 <script>
@@ -32,7 +33,13 @@ export default {
   }),
   methods: {
     dateChanged(ev) {
-      console.log(ev)
+      // console.log(ev)
+    },
+    appointmentPicked(time) {
+      this.$emit('appointmentPicked', {
+        date: this.pickedDate,
+        time
+      })
     }
   },
   computed: {

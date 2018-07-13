@@ -5,6 +5,9 @@ const LOGOUT = 'LOGOUT'
 
 const CONNECT = 'CONNECT'
 
+const PEND_PURCHASE = 'PEND_PURCHASE'
+const CLEAR_PENDING_PURCHASE = 'CLEAR_PENDING_PURCHASE'
+
 export default {
   loginAttempt({ commit }) {
     commit(LOGIN)
@@ -21,5 +24,13 @@ export default {
   connect({ commit }) {
     commit(CONNECT)
     return Promise.resolve()
-  }
+  },
+  pendPurchase({ commit }, purchaseData) {
+    commit(PEND_PURCHASE, purchaseData)
+    return Promise.resolve()
+  },
+  clearPendingPurchase({ commit }) {
+    commit(CLEAR_PENDING_PURCHASE)
+    return Promise.resolve()
+  },
 }

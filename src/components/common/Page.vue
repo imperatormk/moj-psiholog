@@ -31,7 +31,10 @@ export default {
       type: Boolean,
       default: false
     },
-    loaded: null
+    loaded: { // TODO: implement this
+      type: Boolean,
+      default: true
+    }
   },
   methods: {
     navigateTo(path) {
