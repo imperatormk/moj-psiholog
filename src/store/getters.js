@@ -7,5 +7,8 @@ export default {
   },
   authData: state => {
     return state.authData
+  },
+  pendingPurchase: state => {
+    return state.pendingPurchase
   }
 }
