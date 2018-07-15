@@ -15,6 +15,9 @@ import Vuetify from 'vuetify'
 
 import './style/main.scss'
 
+import wysiwyg from 'vue-wysiwyg'
+import 'vue-wysiwyg/dist/vueWysiwyg.css'
+
 Vue.config.productionTip = false
 
 Vue.use(VueSocketCluster, {
@@ -29,6 +32,7 @@ Vue.use(VueSocketCluster, {
 
 Vue.use(Vuetify)
 Vue.mixin(mixins.SocketMixin) // global mixin
+Vue.use(wysiwyg, {})
 
 /* eslint-disable no-new */
 new Vue({
