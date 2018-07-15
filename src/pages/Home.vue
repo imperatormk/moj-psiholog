@@ -20,7 +20,7 @@ export default {
   },
   data: () => ({
     docs: [{
-      id: 1,
+      id: 53,
       name: 'Дарко Симоновски',
       bio: 'Lorem ipsum dolor sit ameta ectetur adipiscing elit. Sed ementum nulla, eu pla',
       img: ''

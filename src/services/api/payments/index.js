@@ -3,12 +3,13 @@ import http from '@/services/http'
 export default function () {
   return {
     requestPayment(req) {
-      const formData = new FormData()
-      formData.append('hoho', 'hihi')
-
-      return http.api.post(`payments/req`, formData)
+      return http.api.post('payments/req', req)
         .then((resp) => {
           return resp.data
+        })
+        .catch((err) => {
+          console.log(err)
+          return new Error(err)
         })
     }
   }
