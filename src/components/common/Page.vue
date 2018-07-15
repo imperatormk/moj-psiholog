@@ -12,8 +12,13 @@
             span.font-white Video Chat
           v-btn(flat v-if="!isLoggedIn" @click="goToLogin()")
             span.font-white Log in
-          v-btn(flat v-if="isLoggedIn" @click="logout()")
-            span.font-white Log out
+          .flex-col.space-around(v-if="isLoggedIn")
+            v-btn(@click="show = !show" flat)
+              span.font-white Dropdown
+            v-menu(v-model="show" z-index="99999")
+              v-btn(flat @click="navigateTo('profile')") My Profile
+              v-btn(flat @click="logout()") Log out
+              v-btn(flat @click="navigateTo('blog')") Blog
     slot(v-if="!loginReq || isLoggedIn")
     LoginPanel(v-else-if="loginReq && !isLoggedIn")
   .align-center.justify-center(v-else)
@@ -26,6 +31,11 @@
 import LoginPanel from '@/components/common/LoginPanel'
 
 export default {
+  data() {
+    return {
+      show: false
+    }
+  },
   props: {
     loginReq: {
       type: Boolean,

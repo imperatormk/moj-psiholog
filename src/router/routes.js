@@ -4,6 +4,8 @@ import videoChatRoutes from './video-chat/routes'
 import commonRoutes from './common/routes'
 import personalityTest from './personality-test/routes'
 import orderRoutes from './order/routes'
+import profileRoutes from './profile/routes'
+import blogRoutes from './blog/routes'
 
 export default [
   ...homeRoutes,
@@ -12,6 +14,8 @@ export default [
   ...commonRoutes,
   ...personalityTest,
   ...orderRoutes,
+  ...profileRoutes,
+  ...blogRoutes,
   {
     path: '*',
     component: {
