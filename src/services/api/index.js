@@ -3,6 +3,7 @@ import videoChatTokensApi from './video-chat'
 import accountsApi from './accounts'
 import paymentsApi from './payments'
 import sessionsApi from './sessions'
+import tokensApi from './tokens'
 
 export default function () {
   return {
@@ -11,5 +12,6 @@ export default function () {
     ...accountsApi(),
     ...paymentsApi(),
     ...sessionsApi(),
+    ...tokensApi(),
   }
 }
