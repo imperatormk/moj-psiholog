@@ -41,7 +41,11 @@ export default {
         password: passwordData.newPassword
       }
       this.$api.confirmAccount(confirmObj)
-        .then(res => console.log(res))
+        .then(res => {
+          if (res.success) {
+            this.$router.push({ name: 'login' })
+          }
+        })
     }
   },
   components: {

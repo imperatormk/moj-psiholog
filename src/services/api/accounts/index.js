@@ -9,7 +9,7 @@ export default function () {
         })
     },
     confirmAccount(data) {
-      return http.api.post('accounts/confirm',data)
+      return http.api.post('accounts/confirm', data)
         .then((resp) => {
           return resp.data
         })     
