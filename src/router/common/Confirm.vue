@@ -1,15 +1,19 @@
 <template lang="pug">
   Page.p30-top
     div(v-if="loaded")
-      div(v-if="valid")
-        span Valid
+      .flex-row(v-if="valid")
+        .flex-1
+        .flex-1
+          ManagePw(:isExisting="false")
+        .flex-1
       div(v-else)
-        span Invalid
+        .fs20 Invalid token, sorry...
 </template>
 
 <script>
 
 import Page from '@/components/common/Page'
+import ManagePw from '@/components/profile/ManagePw'
 
 export default {
   created() {
@@ -17,9 +21,8 @@ export default {
     if (token) {
       this.$api.verifyConfirmToken({ token })
         .then(res => {
-          this.valid = res.isValid
+          this.valid = res.valid
           this.loaded = true
-          console.log(res)
         })
     }
   },
@@ -30,7 +33,8 @@ export default {
     }
   },
   components: {
-    Page
+    Page,
+    ManagePw
   }
 }
 </script>
