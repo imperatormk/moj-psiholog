@@ -1,53 +1,39 @@
 <template lang="pug">
   div
-    v-text-field.tiny-border( :append-icon="show3 ? 'visibility_off' : 'visibility'"
-            :rules="[rules.required, rules.min]"
-            :type="show3 ? 'text' : 'password'"
-            name="input-10-2"
-            label="Not visible"
-            hint="At least 8 characters"
-            value="wqfasds"
-            class="input-group--focused"
-            @click:append="show3 = !show3")
-
-
-
-            
-    v-text-field.tiny-border(label="New password" placeholder="Enter your new password" hide-details v-model="passwordData.newPassword") 
-    v-text-field.tiny-border(label="Repeat password" placeholder="Repeat your  password" hide-details v-model="passwordData.newPasswordConfirm") 
-    v-btn(outline @click="submitPassword") Submit
+    v-text-field.tiny-border(placeholder="Enter your current password" hide-details v-model="passwordData.currentPassword"
+                              v-if="isExisting")       
+    v-text-field.tiny-border(placeholder="Enter your new password" hide-details v-model="passwordData.newPassword") 
+    v-text-field.tiny-border(placeholder="Repeat your password" hide-details v-model="passwordData.newPasswordConfirm") 
+    v-btn(outline  @click="submitPassword") Submit
 </template>
 <script>
 
 export default {
+  props: {
+    isExisting: {
+      type: Boolean,
+      default: true
+    }
+  },
   data() {
     return {
       passwordData: {
         currentPassword: '',
         newPassword: '',
         newPasswordConfirm: ''
-      },
-      show1: false,
-        show2: true,
-        show3: false,
-        show4: false,
-        password: 'Password',
-        rules: {
-          required: value => !!value || 'Required.',
-          min: v => v.length >= 8 || 'Min 8 characters',
-          emailMatch: () => ('The email and password you entered don\'t match')
-        }
-      
+      }
     }
   },
   methods: {
     submitPassword() {
-        if(this.passwordData.currentPassword != "" &&
-            this.passwordData.newPassword == this.passwordData.newPasswordConfirm){
-              console.log("okeeej")
-        }else{
-          
-        }
+      const passObj = {}
+      if (this.isExisting) {
+          passObj.currentPassword = this.passwordData.currentPassword
+          passObj.newPassword = this.passwordData.newPassword
+      } else {
+          passObj.newPassword = this.passwordData.newPassword
+      }
+      console.log(passObj)
     }
   }
 }
