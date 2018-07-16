@@ -4,7 +4,7 @@
       .flex-row(v-if="valid")
         .flex-1
         .flex-1
-          ManagePw(:isExisting="false")
+          ManagePw(:isExisting="false" @passChanged="confirmAccount($event)")
         .flex-1
       div(v-else)
         .fs20 Invalid token, sorry...
@@ -18,6 +18,7 @@ import ManagePw from '@/components/profile/ManagePw'
 export default {
   created() {
     const token = this.$route.params.token
+    this.token = token
     if (token) {
       this.$api.verifyConfirmToken({ token })
         .then(res => {
@@ -28,8 +29,19 @@ export default {
   },
   data() {
     return {
+      token: null,
       loaded: false,
       valid: false
+    }
+  },
+  methods: {
+    confirmAccount(passwordData) {
+      const confirmObj = {
+        token: this.token,
+        password: passwordData.newPassword
+      }
+      this.$api.confirmAccount(confirmObj)
+        .then(res => console.log(res))
     }
   },
   components: {

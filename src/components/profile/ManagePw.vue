@@ -33,7 +33,7 @@ export default {
       } else {
           passObj.newPassword = this.passwordData.newPassword
       }
-      console.log(passObj)
+     this.$emit('passChanged', passObj)
     }
   }
 }
