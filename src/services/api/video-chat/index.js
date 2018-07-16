@@ -3,7 +3,7 @@ import http from '@/services/http'
 export default function () {
   return {
     generateChatToken() {
-      return http.api.get(`tokens`)
+      return http.api.get(`chat-tokens`)
         .then((resp) => {
           return resp.data
         })
