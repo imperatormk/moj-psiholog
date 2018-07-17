@@ -1,8 +1,8 @@
 <template lang="pug">
-  div
-    .flex-row.space-around.section95
+  v-container(fluid style="padding:0")
+    div
       Intro
-    .flex-row.space-around.section60
+    v-layout(row wrap)
       DoctorCard(v-for="doc in docs" :key="doc.id" :docProp="doc")
 </template>
 
