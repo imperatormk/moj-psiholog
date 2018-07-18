@@ -1,21 +1,25 @@
 <template lang="pug">
-  div
-    .flex-row.section100
-      .w30.p20.flex-col.align-center.sidebar.font-white.border-right.space-between
+  v-container(fluid style="padding:0")
+    v-layout(row wrap)
+      v-flex(xs12 sm12 md4 column align-center justify-space-between).p20.sidebar.border-right.font-white
         v-avatar(:size="200" color="grey lighten-4")
           img(:src="docProp.avatar")
-        h2 Rate: ${{ docProp.sessionRate }}/session
-        h3 {{ docProp.rating * 20 }}% positive feedback from {{ docProp.totalSessions }} sessions
         .p10
-          Review(v-for="review in docProp.reviews" :review="review" :key="review.id")
-        h4 This doctor has 
-          a {{ docProp.publications.length }} publications
-      .w70.p30-side.flex-col.space-between.p20-top
-        .p30-side
           h1 {{ docProp.name }}
           br
+          h2 Rate: ${{ docProp.sessionRate }}/session
           br
-          .text-left.fs17 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+          h3 {{ docProp.rating * 20 }}% positive feedback from {{ docProp.totalSessions }} sessions
+          .p10
+            Review(v-for="review in docProp.reviews" :review="review" :key="review.id")
+          h4 This doctor has 
+            a {{ docProp.publications.length }} publications
+      v-flex(xs12 sm12 md8 column justify-space-between).p30-side.p20-top
+        .p30-side.text-left
+          h2 About this doctor
+          br
+          .fs17 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+        .p20-top
         AppointmentPicker(@appointmentPicked="openPurchasePage($event)")
 </template>
 
