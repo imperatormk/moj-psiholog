@@ -1,30 +1,32 @@
 <template lang="pug">
-  .flex-row
-    .flex-2
-    .flex-8
-      h2.p50 Publish New Blog 
-      v-text-field.p10(placeholder="Blog title" hide-details v-model="title") 
-      wysiwyg(v-model="myHTML")
-      v-btn(@click="publishBlog") Publish
-    .flex-2
+  v-container(fluid fill-height style="padding:0")
+    v-layout(row wrap)
+      v-flex(xs12 sm12 md4 column align-center justify-space-between).p20.sidebar.border-right.font-white
+        v-avatar(:size="200" color="grey lighten-4")
+          img(:src="blog.publisher.avatar")
+        .p10
+          h1 {{ blog.publisher.name }}
+          br
+          h4 This doctor has 
+            a {{ blog.publisher.publications.length }} publications
+      v-flex(xs12 sm12 md8 column justify-space-between).p30-top.text-left
+        .p30-side
+          h2 {{ blog.title }}
+          br
+          span(v-html="blog.content")
 </template>
+
 <script>
+
 export default {
-  data() {
-    return {
-      title: '',
-      content: '',
-      myHTML: ''
-    }
-  },
-  methods: {
-    publishBlog() {
-      console.log(`Title: ${this.title}`)
-      console.log(`Content: ${this.myHTML}`)
-      this.title = ''
-      this.myHTML = ''
-    }
+  props: {
+    blog: {}
   }
-}
+};
 </script>
 
+<style lang="scss">
+  .sidebar {
+    background: rgba(8,54,75,0.85);
+  }
+</style>

@@ -1,6 +1,6 @@
 <template lang="pug">
 Page(:loginReq="true")
-  Blog
+  Blog(:blog="blog")
 </template>
 <script>
 
@@ -12,5 +12,19 @@ export default {
     Page,
     Blog
   },
+  data() {
+    return {
+      blog: {
+        publisher: {
+          id: 53,
+          name: 'Дарко Симоновски',
+          publications: ['a', 'b'],
+          avatar: 'https://image.freepik.com/free-vector/doctor-character-background_1270-84.jpg'
+        },
+        title: 'My nice blog',
+        content: '<h2>H2</h2><h3>H3</h3>'
+      }
+    }
+  }
 };
 </script>

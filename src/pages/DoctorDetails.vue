@@ -14,13 +14,13 @@
             Review(v-for="review in docProp.reviews" :review="review" :key="review.id")
           h4 This doctor has 
             a {{ docProp.publications.length }} publications
-      v-flex(xs12 sm12 md8 column justify-space-between).p30-side.p20-top
-        .p30-side.text-left
+      v-flex(xs12 sm12 md8 column justify-space-between).p30-top.text-left
+        .p30-side
           h2 About this doctor
           br
-          .fs17 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-        .p20-top
-        AppointmentPicker(@appointmentPicked="openPurchasePage($event)")
+          .fs17 {{ docProp.bio }}
+          .p20-top
+          AppointmentPicker(@appointmentPicked="openPurchasePage($event)")
 </template>
 
 <script>

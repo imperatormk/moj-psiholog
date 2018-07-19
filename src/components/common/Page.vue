@@ -1,29 +1,29 @@
 <template lang="pug">
-  div(v-if="isConnected")
-    div(style="margin-bottom:55px")
-      v-toolbar(fixed color="blue-grey darken-2")
-        v-toolbar-title
-          span.hoverable.font-white(@click="goToHome()") Moj Psiholog
-        v-spacer
-        v-toolbar-items
-          v-btn(@click="goToHome()" flat)
-            span.font-white Home
-          v-btn(@click="navigateTo('video-chat')" flat)
-            span.font-white Video Chat
-          v-btn(flat v-if="!isLoggedIn" @click="goToLogin()")
-            span.font-white Log in
-          .flex-col.space-around(v-if="isLoggedIn")
-            v-btn(@click="show = !show" flat)
-              span.font-white Dropdown
-            v-menu(v-model="show" z-index="99999")
-              v-btn(flat @click="navigateTo('profile')") My Profile
-              v-btn(flat @click="logout()") Log out
-              v-btn(flat @click="navigateTo('blog')") Blog
-    slot(v-if="!loginReq || isLoggedIn")
-    LoginPanel(v-else-if="loginReq && !isLoggedIn")
+  .fit(v-if="isConnected && loaded")
+    v-toolbar.sticky(color="blue-grey darken-3")
+      v-toolbar-title
+        span.hoverable.font-white(@click="goToHome()") Moj Psiholog
+      v-spacer
+      v-toolbar-items
+        v-btn(@click="goToHome()" flat)
+          span.font-white Home
+        v-btn(@click="navigateTo('video-chat')" flat)
+          span.font-white Video Chat
+        v-btn(flat v-if="!isLoggedIn" @click="goToLogin()")
+          span.font-white Log in
+        .flex-col.space-around(v-if="isLoggedIn")
+          v-btn(@click="show = !show" flat)
+            span.font-white Dropdown
+          v-menu(v-model="show" z-index="99999")
+            v-btn(flat @click="navigateTo('profile')") My Profile
+            v-btn(flat @click="logout()") Log out
+            v-btn(flat @click="navigateTo('newBlog')") New Blog
+    .fit
+      slot(v-if="!loginReq || isLoggedIn")
+      LoginPanel(v-else-if="loginReq && !isLoggedIn")
   .align-center.justify-center(v-else)
     .p10
-      h1 Connecting...
+      h1 Connecting or loading or something else...
 </template>
 
 <script>

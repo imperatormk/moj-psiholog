@@ -23,7 +23,7 @@ Vue.config.productionTip = false
 Vue.use(VueSocketCluster, {
   connections: [{
     name: 'echo',
-    hostname: 'smeni.mk',
+    hostname: '173.212.213.101',
     secure: true,
     port: 3002,
     rejectUnauthorized: false

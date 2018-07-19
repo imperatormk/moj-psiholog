@@ -4,7 +4,7 @@
       .font-intro.font-white.flex-col.space-around
         v-slide-x-reverse-transition
           .flex-row.w100.justify-center.p20(v-if="visible")
-            .flex-col.justify-center.uppercase(style="margin-bottom:20px")
+            .flex-col.justify-center.uppercase(style="margin:20px")
               span.fs40.self-start You can't
               span.fs50 always be there
               span.fs40.self-end but we can

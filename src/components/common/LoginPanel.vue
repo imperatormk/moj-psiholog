@@ -1,9 +1,11 @@
 <template lang="pug">
-  .flex-col.space-around.align-center.m200.p20.tiny-border
-    h1 Login
-    v-text-field.w100(v-model="creds.email" placeholder="Email")
-    v-text-field.w100(v-model="creds.password" type="password" placeholder="Password")
-    v-btn(@click="login") Login
+  v-layout(row fill-height align-center justify-center)
+    v-flex(md6)
+      .flex-col.space-around.align-center.p20.tiny-border
+        h1 Login
+        v-text-field.w100(v-model="creds.email" hide-details placeholder="Email")
+        v-text-field.w100(v-model="creds.password" hide-details type="password" placeholder="Password")
+        v-btn(@click="login" outline) Login
 </template>
 
 <script>

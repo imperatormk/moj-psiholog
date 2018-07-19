@@ -9,9 +9,6 @@
   display: block;
   font-size: 25px;
 }
-.font-paragraph {
-  font-family: 'Courier New', Courier, monospace;
-}
 .uppercase {
   text-transform: uppercase;
 }
@@ -68,6 +65,10 @@
   align-items: center;
   justify-content: center;
 }
+* {
+  font-family: 'Lato', sans-serif;
+  font-weight: 400;
+}
 .cardy {
   width: 20%;
   background: white;
@@ -75,7 +76,6 @@
 }
 .intro-card {
   background: rgba(8,54,75,0.85);
-  width: 60%;
   padding: 10px 20px;
   border-right: 5px solid #9bc03c;
 }
@@ -202,4 +202,10 @@
 }
 .no-margin {
   margin: 0px;
+}
+
+.sticky {
+  position: sticky;
+  z-index: 2;
+  top: 0px;
 }

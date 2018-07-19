@@ -7,6 +7,12 @@ export default function () {
         .then((resp) => {
           return resp.data
         })
+    },
+    getDoctor(doctorId) {
+      return http.api.get(`doctors/${doctorId}`)
+        .then((resp) => {
+          return resp.data
+        })
     }
   }
 }
