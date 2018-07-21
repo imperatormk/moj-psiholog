@@ -15,7 +15,7 @@ import SessionDetails from '@/components/session/SessionDetails'
 import Loading from "@/components/common/Loading"
 export default {
   created() {
-    this.$api.getPendingForUser({ id: this.userId })
+    this.$api.getPendingSessionsForUser({ id: this.userId })
       .then(res => {
         console.log(res)
         this.sessionList = res

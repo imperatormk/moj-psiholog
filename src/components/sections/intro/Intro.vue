@@ -16,7 +16,7 @@
     v-flex(xs12 sm12 md6)
       v-parallax.h100(src="static/doctor1.jpg")
         .flex-row.align-center.justify-center.text-left.p10
-          .intro-card.flex-col.space-around
+          .intro-card.flex-col.space-around(v-if="!isLoggedIn")
             span.uppercase.font-title Book an appointment
             span.p10.font-paragraph(style="display:block;") Enter your email address to get started. First session free!
             .flex-row.input-box-container

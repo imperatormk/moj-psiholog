@@ -1,9 +1,9 @@
 <template lang="pug">
-  div
-    v-text-field.tiny-border(placeholder="Enter your current password" hide-details v-model="passwordData.currentPassword"
+  div.tiny-border
+    v-text-field.p10(placeholder="Enter your current password" hide-details v-model="passwordData.currentPassword"
                               v-if="isExisting")       
-    v-text-field.tiny-border(placeholder="Enter your new password" hide-details v-model="passwordData.newPassword") 
-    v-text-field.tiny-border(placeholder="Repeat your password" hide-details v-model="passwordData.newPasswordConfirm") 
+    v-text-field.p10(placeholder="Enter your new password" hide-details v-model="passwordData.newPassword") 
+    v-text-field.p10(placeholder="Repeat your password" hide-details v-model="passwordData.newPasswordConfirm") 
     v-btn(outline  @click="submitPassword") Submit
 </template>
 <script>

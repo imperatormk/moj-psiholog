@@ -3,13 +3,13 @@ div(v-if="loaded")
   .flex-col.fit.align-center.justify-center.p10
     div(v-if="session")
       .p10
-        h1 Video Chat - Session ID '{{ session.hash }}'
+        h1 Video Chat - Session ID {{ session.id }}
       div(v-if="connectedToChat")
         .p10(v-if="isPatient")
           .flex-col.justify-end
             Dialog(v-if="pendingCallData" :resultCb="pendingCallDataResult")
             template(v-if="!sessionData.doctorConnected")
-              h3 Waiting for doctor: {{ session.doctor.email }}
+              h3 Waiting for doctor {{ session.doctor.email }}
             template(v-else)
               .p10(v-if="established")
                 Counter
@@ -49,7 +49,7 @@ import Counter from '@/components/counter/Counter'
 
 export default {
   created() {
-    this.$api.getSessions(this.userId)
+    this.$api.getReadySessionsForUser({ id: this.userId})
       .then((sessionRes) => {
         this.session = sessionRes.success ? { ...sessionRes.payload } : null
 
@@ -156,7 +156,7 @@ export default {
   },
   computed: {
     sessionCh() {
-      return this.session ? `sess-${this.session.hash}` : ''
+      return this.session ? `sess-${this.session.id}` : ''
     }
   },
   components: {

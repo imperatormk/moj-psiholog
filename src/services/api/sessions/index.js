@@ -8,12 +8,19 @@ export default function () {
           return resp.data
         })
     },
-    getPendingForUser(req) {
+    getPendingSessionsForUser(req) {
       const reqObj = {
         ...req,
         sessionStatusType: 'pending'
       }
       return http.api.post('sessions/getByUser', reqObj)
+        .then((resp) => {
+          return resp.data
+        })
+    },
+    getReadySessionsForUser(req) {
+      const reqObj = { ...req }
+      return http.api.post('sessions/getByUser/ready', reqObj)
         .then((resp) => {
           return resp.data
         })
