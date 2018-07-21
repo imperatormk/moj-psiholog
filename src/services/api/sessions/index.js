@@ -24,6 +24,16 @@ export default function () {
         .then((resp) => {
           return resp.data
         })
-    }
+    },
+    getCompletedSessionsForUser(req) {
+      const reqObj = {
+        ...req,
+        sessionStatusType: 'completed'
+      }
+      return http.api.post('sessions/getByUser', reqObj)
+        .then((resp) => {
+          return resp.data
+        })
+    },
   }
 }

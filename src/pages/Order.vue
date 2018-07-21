@@ -20,12 +20,6 @@
                   v-checkbox.defaultw(v-model="sendReminder" hide-details)
                   span.p5-left Remind me 10 minutes before
               v-btn(outline :disabled="requestLoading" @click="proceedToCheckout") Proceed to checkout
-
-        v-snackbar(v-model="requestFinished"
-          top
-          multi-line
-          :timeout="5000")
-          span {{ getRequestStatusMessage }}
     div(v-else)
       h1 Invalid request...
 </template>
@@ -39,7 +33,6 @@ export default {
   },
   data: () => ({
     sendReminder: false,
-    requestFinished: false,
     requestLoading: false,
     requestStatus: null
   }),
@@ -81,15 +74,14 @@ export default {
         }
       }
 
-      this.requestFinished = false
       this.requestLoading = true
-
       this.$api.requestPayment(reqObj)
         .then((res) => {
           res.success ? this.requestStatus = 'success' : this.requestStatus = 'fail'
           this.requestLoading = false
-          this.requestFinished = true
-          console.log(res)
+          this.$messageBus.$emit('alert', {
+            message: this.getRequestStatusMessage
+          })
         })
     }
   }

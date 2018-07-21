@@ -19,6 +19,8 @@
     .flex-10
       .p10
         div(v-if="selectedSub === 'changepw'")
+          h2 Change password
+          br
           ManagePw
         div(v-if="selectedSub === 'history'")
           HistorySessions
@@ -32,17 +34,20 @@ import HistorySessions from '@/components/profile/HistorySessions'
 import UpcomingSessions from '@/components/profile/UpcomingSessions'
 
 export default {
-  data () {
-      return {
-        drawer: true,
-        items: [
-          { id:'changepw', title: 'Change password', icon: 'dashboard' },
-          { id: 'history', title: 'Session History', icon: 'question_answer' },
-          { id: 'upcoming', title: 'Upcoming Sessions', icon: 'question_answer' }
-        ],
-        selectedSub: ""
-      }
-    },
+  created() {
+    this.selectedSubMenu(this.items[0])
+  },
+  data() {
+    return {
+      drawer: true,
+      items: [
+        { id: 'upcoming', title: 'Upcoming Sessions', icon: 'question_answer' },
+        { id: 'history', title: 'Session History', icon: 'question_answer' },
+        { id: 'changepw', title: 'Change password', icon: 'dashboard' },
+      ],
+      selectedSub: ""
+    }
+  },
   methods: {
     selectedSubMenu(item){
       this.selectedSub = item.id

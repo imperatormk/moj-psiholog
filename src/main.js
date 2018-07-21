@@ -9,6 +9,7 @@ import router from './router'
 import store from './store'
 import mixins from './services/mixins'
 import axios from 'axios'
+import MessageBus from '@/services/messageBus.js'
 
 import VueSocketCluster from 'vue-socket-cluster'
 import Vuetify from 'vuetify'
@@ -23,7 +24,7 @@ Vue.config.productionTip = false
 Vue.use(VueSocketCluster, {
   connections: [{
     name: 'echo',
-    hostname: '173.212.213.101',
+    hostname: 'smeni.mk',
     secure: true,
     port: 3002,
     rejectUnauthorized: false
@@ -33,6 +34,8 @@ Vue.use(VueSocketCluster, {
 Vue.use(Vuetify)
 Vue.mixin(mixins.SocketMixin) // global mixin
 Vue.use(wysiwyg, {})
+
+Vue.prototype.$messageBus = MessageBus
 
 /* eslint-disable no-new */
 new Vue({

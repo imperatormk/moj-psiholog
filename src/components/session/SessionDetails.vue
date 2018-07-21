@@ -1,10 +1,11 @@
 <template lang="pug">
-  div
+  .fit
     v-expansion-panel-content
       div(slot="header")
         span {{ sessionObj.id }}
       v-card
-        v-card-text {{ sessionObj.status }}
+        v-card-text 
+          .p20-left {{ sessionObj.status }}
 </template>
 <script>
 export default {

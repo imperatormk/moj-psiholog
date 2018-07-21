@@ -24,7 +24,6 @@ export default {
     docProp: {}
   },
   created() {
-    console.log(this.docProp)
     this.doc = { ...this.docProp }
   },
   watch: {

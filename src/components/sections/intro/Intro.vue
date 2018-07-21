@@ -16,20 +16,13 @@
     v-flex(xs12 sm12 md6)
       v-parallax.h100(src="static/doctor1.jpg")
         .flex-row.align-center.justify-center.text-left.p10
-          .intro-card.flex-col.space-around(v-if="!isLoggedIn")
-            span.uppercase.font-title Book an appointment
-            span.p10.font-paragraph(style="display:block;") Enter your email address to get started. First session free!
-            .flex-row.input-box-container
-              input.no-focus.input-box.italic(placeholder="Email" v-model="email")
-              .input-icon.flex-row.align-center.justify-center(style="width:50px;")
-                v-icon(color="gray") airplay
-            .flex-row.justify-start
-              v-btn(color="light-green" @click="createAccount") Submit Now
+          RegisterPanel(v-if="!isLoggedIn" @accountSubmit="createAccount($event)")
 </template>
 
 <script>
 
 import Vue from 'vue'
+import RegisterPanel from '@/components/common/RegisterPanel'
 
 export default {
   created() {
@@ -41,17 +34,23 @@ export default {
     }, 5000)
   },
   data: () => ({
-    email: '',
     visible: true
   }),
   methods: {
-    createAccount() {
-      const email = this.email.trim()
-      if (email) {
-        this.$api.createAccount({ email })
-          .then(res => console.log(res))
-      }
+    createAccount(email) {
+      this.$api.createAccount({ email })
+        .then(res => {
+          const successMsg = "Account created! Check your email for further instructions"
+          const failureMsg = 'Oops! Something went wrong... please try again or contact support.'
+          
+          this.$messageBus.$emit('alert', {
+            message: res.success ? successMsg : failureMsg
+          })
+        })
     }
+  },
+  components: {
+    RegisterPanel
   }
 }
 </script>

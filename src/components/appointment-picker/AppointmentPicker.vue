@@ -49,10 +49,8 @@ export default {
       const day = currentDate.getDate() > 10 ? currentDate.getDate() : `0${currentDate.getDate()}`
       const month = currentDate.getMonth() + 1 > 10 ? currentDate.getMonth() + 1  : `0${currentDate.getMonth() + 1}`
       const year = currentDate.getFullYear()
-      const hour = currentDate.getHours() > 10 ? currentDate.getHours() : `0${currentDate.getHours()}`
-      const minute = currentDate.getMinutes() > 10 ? currentDate.getMinutes() : `0${currentDate.getMinutes()}`
 
-      return `${year}-${month}-${day} ${hour}:${minute}`
+      return `${year}-${month}-${day}`
     }
   },
   computed: {

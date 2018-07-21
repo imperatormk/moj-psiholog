@@ -1,17 +1,42 @@
 <template lang="pug">
   .fit
-    v-expansion-panel.w100
-      v-expansion-panel-content(v-for="(item,i) in 5" :key="i")     
-        div(slot="header") Item
-        v-card
-          v-card-text Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</v-card-text>
-     
+    h2 Session history
+    br
+    div(v-if="loaded")
+      div(v-if="hasSessions")
+        v-expansion-panel.w100
+          SessionDetails(v-for="session in sessionList" :key="session.id" :sessionObj="session")
+      div(v-else)
+        p No past sessions
+    div(v-else)
+      Loading
+
 </template>
 <script>
+import SessionDetails from '@/components/session/SessionDetails'
+import Loading from "@/components/common/Loading"
 export default {
-  created: {
-    
+  created() {
+    this.$api.getCompletedSessionsForUser({ id: this.userId })
+      .then(res => {
+        this.sessionList = res
+        this.loaded = true
+      })
+  },
+  data() {
+    return {
+      sessionList: [],
+      loaded: false
+    }
+  },
+  computed: {
+    hasSessions() {
+      return this.sessionList.length !== 0
+    }
+  },
+  components: {
+    SessionDetails,
+    Loading
   }
 }
 </script>
-
