@@ -2,8 +2,8 @@ import http from '@/services/http'
 
 export default function () {
   return {
-    generateChatToken() {
-      return http.api.get(`chat-tokens`)
+    generateChatToken(data) {
+      return http.api.post('chat-tokens', data)
         .then((resp) => {
           return resp.data
         })

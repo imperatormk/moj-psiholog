@@ -1,45 +1,41 @@
 <template lang="pug">
-div(v-if="loaded")
-  .flex-col.fit.align-center.justify-center.p10
-    div(v-if="session")
-      .p10
-        h1 Video Chat - Session ID {{ session.id }}
-      div(v-if="connectedToChat")
-        .p10(v-if="isPatient")
-          .flex-col.justify-end
-            Dialog(v-if="pendingCallData" :resultCb="pendingCallDataResult")
-            template(v-if="!sessionData.doctorConnected")
-              h3 Waiting for doctor {{ session.doctor.email }}
+.flex-col.fit.align-center.justify-center.p10
+  div(v-if="session")
+    .p10
+      h1 Video Chat - Session ID {{ session.id }}
+    div(v-if="connectedToChat")
+      .p10(v-if="isPatient")
+        .flex-col.justify-end
+          Dialog(v-if="pendingCall" :resultCb="pendingCallResult")
+          template(v-if="!sessionState.doctorConnected")
+            h3 Waiting for doctor {{ session.doctor.email }}
+          template(v-else)
+            .p10(v-if="established")
+              Counter
+            .p10(v-else)
+              h3 Doctor connected, hang on...
+          VideoChatContainer(:sessionId="sessionKey")
+          v-btn(@click="disconnect") Disconnect
+      .p10(v-if="isDoctor")
+        .flex-col
+          VideoChatContainer(v-if="established" :sessionId="sessionKey")
+          .p10
+            template(v-if="!sessionState.patientConnected")
+              h3 Waiting for patient...
             template(v-else)
               .p10(v-if="established")
                 Counter
               .p10(v-else)
-                h3 Doctor connected, hang on...
-            VideoChatContainer(v-if="established" :videoSessionDataProp="videoSessionData")
-            v-btn(@click="disconnect") Disconnect
-        .p10(v-if="isDoctor")
-          .flex-col
-            VideoChatContainer(@sessionCreated="storeSession($event)")
-            .p10
-              template(v-if="!sessionData.patientConnected")
-                h3 Waiting for patient...
-              template(v-else)
-                .p10(v-if="established")
-                  Counter
-                .p10(v-else)
-                  h3 Patient connected
-                  v-btn(@click="callPatient(session.patient)") Call
-            br
-      div(v-else)
-        .p10
-          h3 You are not connected to chat
-        v-btn(@click="initEvents()") Reconnect
+                h3 Patient connected
+                v-btn(@click="callPatient()") Call
+          br
     div(v-else)
       .p10
-        h3 No session?
-div(v-else)
-  .p10
-    h3 Loading from API or something...
+        h3 You are not connected to chat
+      v-btn(@click="initEvents()") Reconnect
+  div(v-else)
+    .p10
+      h3 No session?
 </template>
 <script>
 
@@ -48,34 +44,32 @@ import Dialog from '@/components/common/Dialog'
 import Counter from '@/components/counter/Counter'
 
 export default {
+  props: {
+    sessionProp: {
+      type: Object,
+      default: null
+    }
+  },
   created() {
-    this.$api.getReadySessionsForUser({ id: this.userId})
-      .then((sessionRes) => {
-        this.session = sessionRes.success ? { ...sessionRes.payload } : null
-
-        if (sessionRes.success) {
-          this.scChannel = this.getChannel(this.sessionCh)
-          this.initEvents()
-        }
-        this.loaded = true
-      })
+    if (this.sessionProp) {
+      this.session = JSON.parse(JSON.stringify(this.sessionProp)) // haha
+      this.scChannel = this.getChannel(this.sessionCh)
+      this.initEvents()
+    }
   },
   beforeDestroy() {
     this.disconnect()
   },
   data: () => ({
-    loaded: false,
     scChannel: null,
-    sessionData: {},
-    session: null, // hmm
+    session: null,
     connectedToChat: false,
     established: false,
-    videoSessionData: null,
-    pendingCallData: false
+    pendingCall: false
   }),
   methods: {
     updateSession(data) {
-      this.sessionData = data
+      this.session.callState = data
       console.log('updateSession', data)
     },
     disconnect() {
@@ -117,46 +111,46 @@ export default {
     // patient fns
     onDoctorAction(actionData) { // map actions?
       console.log('data from doc to patient:', actionData)
-      if (actionData.event === 'callInvite') this.callInvite(actionData.data)
-      // well do stuff here...
+      if (actionData.event === 'callInvite') {
+        this.callInvite(actionData.data)
+      }
     },
-    callInvite(callData) {
-      this.pendingCallData = callData
+    callInvite() {
+      this.pendingCall = true
     },
     acceptCall() {
       this.emitEvent('acceptCall', {
         session: this.session
       })
-      this.videoSessionData = {
-        ...this.pendingCallData
-      }
       this.established = true
     },
     // doctor fns
-    storeSession(videoSessionData) {
-      this.videoSessionData = videoSessionData
-    },
     onPatientAction(actionData) { // map actions?
       console.log('data from patient to doc:', actionData)
       if (actionData.event === 'acceptCall') this.established = true
       // well do stuff here...
     }, 
-    callPatient(patient) {
+    callPatient() {
       this.emitEvent('callPatient', {
-        session: this.session,
-        videoSessionData: this.videoSessionData
+        session: this.session
       })
     },
-    pendingCallDataResult(result) {
+    pendingCallResult(result) {
       if (result.accepted === true) {
         this.acceptCall()
       }
-      this.pendingCallData = null
+      this.pendingCall = false
     }
   },
   computed: {
     sessionCh() {
       return this.session ? `sess-${this.session.id}` : ''
+    },
+    sessionState() {
+      return this.session.callState
+    },
+    sessionKey() {
+      return this.session.sessionKey
     }
   },
   components: {
