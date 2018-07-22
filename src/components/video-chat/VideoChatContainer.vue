@@ -31,7 +31,7 @@ export default {
           this.sessionData = Object.assign({}, this.sessionData, data)
           this.started = true
         }).catch((err) => {
-          alert('Failed to get opentok sessionId and token. Make sure you have updated the config.js file.');
+          console.error('Failed to get opentok sessionId and token. Make sure you have updated the config.js file.');
         })
     }
   },

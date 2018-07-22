@@ -13,7 +13,7 @@ import Publisher from './Publisher.vue'
 import Subscriber from './Subscriber.vue'
 
 const errorHandler = (err) => {
-  alert(err.message)
+  console.error(err.message)
 }
 
 export default {
