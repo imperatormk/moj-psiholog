@@ -5,36 +5,37 @@
       multi-line
       :timeout="alert.timeout")
       span {{ alert.message }}
-    .fit(v-if="isConnected && isLoaded")
-      v-toolbar.sticky(color="blue-grey darken-3")
-        v-toolbar-title
-          span.hoverable.font-white(@click="goToHome()") Moj Psiholog
-        v-spacer
-        v-toolbar-items
-          v-btn(@click="goToHome()" flat)
-            span.font-white Home
-          v-btn(@click="navigateTo('video-chat')" flat)
-            span.font-white Video Chat
-          v-btn(flat v-if="!isLoggedIn" @click="goToLogin()")
-            span.font-white Log in
-          .flex-col.space-around(v-if="isLoggedIn")
-            v-menu(v-model="showDropdown" offset-y)
-              v-btn(slot="activator" flat)
-                .font-white
-                  v-icon menu
-              v-list
-                v-list-tile
-                  v-btn(flat @click="navigateTo('profile')") My Profile
-                v-list-tile
-                  v-btn(flat @click="logout()") Log out
-                v-list-tile
-                  v-btn(flat @click="navigateTo('newBlog')") New Blog
-      .fit
-        slot(v-if="!loginReq || isLoggedIn")
-        LoginPanel(v-else-if="loginReq && !isLoggedIn")
-    .align-center.justify-center(v-else)
-      .p10
-        h1 Connecting or loading or something else...
+    v-toolbar.sticky(app color="blue-grey darken-3")
+      v-toolbar-title
+        span.hoverable.font-white(@click="goToHome()") Moj Psiholog
+      v-spacer
+      v-toolbar-items
+        v-btn(@click="goToHome()" flat)
+          span.font-white Home
+        v-btn(@click="navigateTo('video-chat')" flat)
+          span.font-white Video Chat
+        v-btn(flat v-if="!isLoggedIn" @click="goToLogin()")
+          span.font-white Log in
+        .flex-col.space-around(v-if="isLoggedIn")
+          v-menu(v-model="showDropdown" offset-y)
+            v-btn(slot="activator" flat)
+              .font-white
+                v-icon menu
+            v-list
+              v-list-tile
+                v-btn(flat @click="navigateTo('profile')") My Profile
+              v-list-tile
+                v-btn(flat @click="logout()") Log out
+              v-list-tile
+                v-btn(flat @click="navigateTo('newBlog')") New Blog
+    v-content(style="padding:0")
+      v-container(fluid style="padding:0")
+        .fit(v-if="isConnected && isLoaded")
+          slot(v-if="!loginReq || isLoggedIn")
+          LoginPanel(v-else-if="loginReq && !isLoggedIn")
+        .align-center.justify-center(v-else)
+          .p10
+            h1 Connecting or loading or something else...
 </template>
 
 <script>

@@ -1,7 +1,8 @@
 <template lang="pug">
-  .p10-top.flex-row
-    .flex-1
-      v-navigation-drawer.tiny-border(v-model="drawer")
+v-container(fluid style="padding:0")
+  v-layout(row wrap)
+    v-flex(hidden-sm-and-down md3 column align-center justify-space-between)
+      v-navigation-drawer.w100(v-model="drawer")
         v-toolbar.transparent
           v-list.pa-0
             v-list-tile 
@@ -16,22 +17,22 @@
               v-icon {{ item.icon }}
             v-list-tile-content
               v-list-tile-title {{ item.title }}
-    .flex-10
-      .p10
+    v-flex(xs12 sm12 md9 column align-center justify-space-between)
+      .p10.p5-left
         div(v-if="selectedSub === 'changepw'")
           h2 Change password
           br
           ManagePw
         div(v-if="selectedSub === 'history'")
-          HistorySessions
+          ListSessions(listType="history")
         div(v-if="selectedSub === 'upcoming'")
-          UpcomingSessions    
+          ListSessions(listType="upcoming")
 </template>
 <script>
 
+import Vue from 'vue'
 import ManagePw from '@/components/profile/ManagePw'
-import HistorySessions from '@/components/profile/HistorySessions'
-import UpcomingSessions from '@/components/profile/UpcomingSessions'
+import ListSessions from '@/components/profile/ListSessions'
 
 export default {
   created() {
@@ -50,13 +51,15 @@ export default {
   },
   methods: {
     selectedSubMenu(item){
-      this.selectedSub = item.id
+      this.selectedSub = null
+      Vue.nextTick(() => {
+        this.selectedSub = item.id
+      })
     }
   },
   components: {
     ManagePw,
-    HistorySessions,
-    UpcomingSessions
+    ListSessions
   }
 };
 </script>

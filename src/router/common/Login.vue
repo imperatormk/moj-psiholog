@@ -11,7 +11,7 @@ import LoginPanel from '@/components/common/LoginPanel'
 export default {
   watch: {
     isLoggedIn(val) {
-      if (val) this.$router.push({ name: 'home' }) // make this a bit smarter so logout sometimes redirects too
+      if (val) this.$router.push({ name: 'home' }) // TODO: make this a bit smarter so logout sometimes redirects too
     }
   },
   components: {
