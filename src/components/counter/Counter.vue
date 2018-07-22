@@ -8,18 +8,25 @@ export default {
     cb: {
       type: Function,
       default: null
+    },
+    ongoing: {
+      type: Boolean,
+      default: false
     }
   },
-  created() {
-    this.startTimer()
+  watch: {
+    ongoing(val) {
+      val ? this.startTimer() : this.stopTimer()
+    }
   },
-  destroyed() {
+  beforeDestroy() {
     if (this.cb) {
       this.cb({
         totalSeconds: this.seconds + this.minutes * 60 + this.hours * 3600
       })
     }
     this.stopTimer()
+    this.$emit('durationEnded', { duration: this.seconds })
   },
   data: () => ({
     seconds: 0,

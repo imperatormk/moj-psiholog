@@ -5,7 +5,7 @@
       multi-line
       :timeout="alert.timeout")
       span {{ alert.message }}
-    .fit(v-if="isConnected && loaded")
+    .fit(v-if="isConnected && isLoaded")
       v-toolbar.sticky(color="blue-grey darken-3")
         v-toolbar-title
           span.hoverable.font-white(@click="goToHome()") Moj Psiholog
@@ -37,22 +37,6 @@
 import LoginPanel from '@/components/common/LoginPanel'
 
 export default {
-  created() {
-    this.$messageBus.$on('alert', this.alertHandler)
-  },
-  destroyed() {
-    this.$messageBus.$off('alert', this.alertHandler)
-  },
-  data() {
-    return {
-      showDropdown: false,
-      alert: {
-        show: false,
-        message: '',
-        duration: 5000
-      }
-    }
-  },
   props: {
     loginReq: {
       type: Boolean,
@@ -61,6 +45,31 @@ export default {
     loaded: { // TODO: implement this
       type: Boolean,
       default: true
+    }
+  },
+  created() {
+    this.$messageBus.$on('alert', this.alertHandler)
+    this.onReadyChange(this.isAuth)
+    this.socketLoaded = true
+  },
+  destroyed() {
+    this.$messageBus.$off('alert', this.alertHandler)
+  },
+  watch: { // a bit experimental
+    isAuth(val) {
+      if (this.socketLoaded) { this.onReadyChange(val) }
+    }
+  },
+  data() {
+    return {
+      showDropdown: false,
+      alert: {
+        show: false,
+        message: '',
+        duration: 5000
+      },
+      socketLoaded: false,
+      pageLoadedMaster: false // lol
     }
   },
   methods: {
@@ -79,6 +88,25 @@ export default {
         this.alert.show = false
         this.alert.message = ''
       }, this.alert.duration + 100)
+    },
+    onReadyChange(auth) { // ready hmm
+      if (auth) {
+        this.pageLoadedMaster = false
+        this.$emit('ready')
+      } else {
+        this.pageLoadedMaster = true
+      }
+    }
+  },
+  computed: {
+    isLoaded() {
+      return this.pageLoadedMaster || this.loaded
+    },
+    isAuth() {
+      return !this.loginReq || this.isLoggedIn
+    },
+    isReady() {
+      return this.isLoaded && this.isAuth
     }
   },
   components: {

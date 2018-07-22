@@ -29,7 +29,6 @@ export default {
       this.$api.generateChatToken({ sessionId: this.sessionId })
         .then((data) => {
           this.sessionData = Object.assign({}, this.sessionData, data)
-          console.log(this.sessionData, data)
           this.started = true
         }).catch((err) => {
           alert('Failed to get opentok sessionId and token. Make sure you have updated the config.js file.');

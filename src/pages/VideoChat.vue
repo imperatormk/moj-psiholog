@@ -3,6 +3,7 @@
   div(v-if="session")
     .p10
       h1 Video Chat - Session ID {{ session.id }}
+      Counter(:ongoing="isOngoing")
     div(v-if="connectedToChat")
       .p10(v-if="isPatient")
         .flex-col.justify-end
@@ -10,9 +11,7 @@
           template(v-if="!sessionState.doctorConnected")
             h3 Waiting for doctor {{ session.doctor.email }}
           template(v-else)
-            .p10(v-if="established")
-              Counter
-            .p10(v-else)
+            .p10(v-if="!established")
               h3 Doctor connected, hang on...
           VideoChatContainer(:sessionId="sessionKey")
           v-btn(@click="disconnect") Disconnect
@@ -23,11 +22,11 @@
             template(v-if="!sessionState.patientConnected")
               h3 Waiting for patient...
             template(v-else)
-              .p10(v-if="established")
-                Counter
-              .p10(v-else)
+              .p10(v-if="!established")
                 h3 Patient connected
                 v-btn(@click="callPatient()") Call
+              .p10(v-else)
+                v-btn(@click="finishSession()") Finish session
           br
     div(v-else)
       .p10
@@ -53,7 +52,7 @@ export default {
   created() {
     if (this.sessionProp) {
       this.session = JSON.parse(JSON.stringify(this.sessionProp)) // haha
-      this.scChannel = this.getChannel(this.sessionCh)
+      this.scChannel = this.getChannel(this.sessionChannel)
       this.initEvents()
     }
   },
@@ -65,55 +64,60 @@ export default {
     session: null,
     connectedToChat: false,
     established: false,
-    pendingCall: false
+    pendingCall: false,
+    eventSub: false
   }),
   methods: {
     updateSession(data) {
       this.session.callState = data
-      console.log('updateSession', data)
     },
     disconnect() {
-      this.unsubEvents()
-      this.connectedToChat = false
+      if (this.sessionProp) {
+        this.unsubEvents()
+      }      
     },
     initEvents() {
-      this.connectedToChat = true
-      if (this.userType === 'patient') {
-        this.onEvent('callInvite', this.callInvite)
+      if (!this.eventSub) {
+        this.connectedToChat = true
         this.scChannel.watch((data) => {
-            if (data.event === 'sessionChange') {
-              this.updateSession(data.data)
-            } else {
+          if (data.event === 'sessionChange') {
+            this.updateSession(data.data)
+          } else if (data.event === 'sessionFinished') {
+            this.onSessionFinished()
+          } else {
+            if (this.userType === 'patient') {
               this.onDoctorAction(data)
-            }
-          })
-        this.scChannel.subscribe()
-      } else if (this.userType === 'doctor') {
-        this.scChannel.watch((data) => {
-            if (data.event === 'sessionChange') {
-              this.updateSession(data.data)
-            } else {
+            } else if (this.userType === 'doctor') {
               this.onPatientAction(data)
             }
-          })
+          }
+        })
         this.scChannel.subscribe()
+        this.eventSub = true
       }
     },
     unsubEvents() {
-      if (this.userType === 'patient') {
-        this.offEvent('callInvite')
-      } else if (this.userType === 'doctor') {
-        
+      if (this.eventSub) {
+        this.connectedToChat = false
+        if (this.userType === 'patient') {
+          this.offEvent('callInvite')
+        } else if (this.userType === 'doctor') {
+          
+        }
+        this.scChannel.unsubscribe()
+        this.scChannel.unwatch()
+        this.eventSub = false
       }
-      this.scChannel.unsubscribe()
-      this.scChannel.unwatch()
     },
     // patient fns
     onDoctorAction(actionData) { // map actions?
-      console.log('data from doc to patient:', actionData)
       if (actionData.event === 'callInvite') {
         this.callInvite(actionData.data)
       }
+    },
+    onSessionFinished() {
+      this.disconnect()
+      this.$emit('sessionFinished')
     },
     callInvite() {
       this.pendingCall = true
@@ -124,26 +128,31 @@ export default {
       })
       this.established = true
     },
+    pendingCallResult(result) {
+      if (result.accepted === true) {
+        this.acceptCall()
+      }
+      this.pendingCall = false
+    },
     // doctor fns
     onPatientAction(actionData) { // map actions?
-      console.log('data from patient to doc:', actionData)
-      if (actionData.event === 'acceptCall') this.established = true
-      // well do stuff here...
+      if (actionData.event === 'acceptCall') {
+        this.established = true
+      }
     }, 
     callPatient() {
       this.emitEvent('callPatient', {
         session: this.session
       })
     },
-    pendingCallResult(result) {
-      if (result.accepted === true) {
-        this.acceptCall()
-      }
-      this.pendingCall = false
+    finishSession() {
+      this.emitEvent('finishSession', {
+        session: this.session
+      })
     }
   },
   computed: {
-    sessionCh() {
+    sessionChannel() {
       return this.session ? `sess-${this.session.id}` : ''
     },
     sessionState() {
@@ -151,6 +160,9 @@ export default {
     },
     sessionKey() {
       return this.session.sessionKey
+    },
+    isOngoing() {
+      return this.session.callState.doctorConnected && this.session.callState.patientConnected && this.established
     }
   },
   components: {
