@@ -1,13 +1,12 @@
 <template lang="pug">
 .p10
-  v-date-picker.tiny-border(:dark="isDark" landscape v-model="pickedDate" reactive :light="isLight" header-color="light-green" @input="dateChanged($event)")
+  v-date-picker.tiny-border(:dark="isDark" landscape v-model="pickedDate" reactive :light="isLight" header-color="light-green" color="light-green" @input="dateChanged($event)")
     v-spacer
     .w100(v-show="pickedDate")
-      .p10.tiny-border
-        .flex-row
-          .p5-side(v-for="(availableTime, index) in availableTimes" :key="index")
-            v-chip.hoverable(@click="appointmentPicked(availableTime)")
-              span.hoverable {{ availableTime.hour }}:{{ availableTime.minute }}
+      .p5.flex-row.space-between.tiny-border
+        .p5-side(v-for="(availableTime, index) in availableTimes" :key="index")
+          v-chip.hoverable(outline @click="appointmentPicked(availableTime)")
+            span.hoverable {{ availableTime.hour }}:{{ availableTime.minute }}
 </template>
 
 <script>

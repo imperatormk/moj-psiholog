@@ -1,29 +1,14 @@
 <template lang="pug">
-  .flex-row
-    .flex-2
-    .flex-8
-      h2.p50 Publish New Blog 
-      v-text-field.p10(placeholder="Blog title" hide-details v-model="title") 
-      wysiwyg(v-model="myHTML")
-      v-btn(@click="publishBlog") Publish
-    .flex-2
+  v-container(fluid fill-height style="padding:0")
+    NewBlog
 </template>
 <script>
+
+import NewBlog from '@/components/blog/NewBlog'
+
 export default {
-  data() {
-    return {
-      title: '',
-      content: '',
-      myHTML: ''
-    }
-  },
-  methods: {
-    publishBlog() {
-      console.log(`Title: ${this.title}`)
-      console.log(`Content: ${this.myHTML}`)
-      this.title = ''
-      this.myHTML = ''
-    }
+  components: {
+    NewBlog
   }
 }
 </script>

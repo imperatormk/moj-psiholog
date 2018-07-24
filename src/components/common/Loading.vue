@@ -1,6 +1,5 @@
 <template lang="pug">
-   div
+  div
     v-progress-circular(indeterminate color="primary")
-    
 </template>
 

@@ -26,8 +26,6 @@
                 v-btn(flat @click="navigateTo('profile')") My Profile
               v-list-tile
                 v-btn(flat @click="logout()") Log out
-              v-list-tile
-                v-btn(flat @click="navigateTo('newBlog')") New Blog
     v-content(style="padding:0")
       v-container(fluid style="padding:0")
         .fit(v-if="isConnected && isLoaded")
