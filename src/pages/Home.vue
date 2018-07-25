@@ -1,21 +1,27 @@
 <template lang="pug">
   div
     Intro
-    Doctors(:docs="docs")
+    Doctors(:docs="data.docs")
+    Blogs(:blogs="data.blogs")
 </template>
 
 <script>
 
 import Intro from '@/components/sections/Intro'
 import Doctors from '@/components/sections/Doctors'
+import Blogs from '@/components/sections/Blogs'
 
 export default {
   props: {
-    docs: Array
+    data: {
+      type: Object,
+      required: true
+    }
   },
   components: {
     Intro,
-    Doctors
+    Doctors,
+    Blogs
   },
 };
 </script>

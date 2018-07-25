@@ -45,7 +45,8 @@ export default {
   computed: {
     getShortBio() {
       const limit = 200
-      return this.doc.bio.length > limit ? `${this.doc.bio.substring(0, limit)}...` : this.doc.bio
+      const content = this.doc.bio
+      return content.length > limit ? `${content.substring(0, limit)}...` : content
     }
   },
   methods: {
@@ -55,4 +56,3 @@ export default {
   }
 }
 </script>
-

@@ -1,6 +1,8 @@
 <template lang="pug">
-  v-layout(row wrap v-if="hasDoctors")
-    DoctorCard(v-for="doc in docs" :key="doc.id" :docProp="doc")
+  v-layout(column wrap v-if="hasDoctors")
+    span.section-header.p10-top Our staff
+    v-layout(row wrap)
+      DoctorCard(v-for="doc in docs" :key="doc.id" :docProp="doc")
   .p100.flex-row.justify-center(v-else)
     h2 We have no personnel at the moment...
 </template>
