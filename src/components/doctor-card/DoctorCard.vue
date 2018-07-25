@@ -1,5 +1,5 @@
 <template lang="pug">
-  v-flex.p20(xs12 sm12 md3)
+  v-flex.p20(xs6 sm6 md3)
     .tiny-border(style="height:inherit" @mouseover="showBio=true" @mouseleave="showBio=false" @click.stop="")
       .flex-col.fit(v-if="showMain")
         .flex-col.font-white.space-around.h22.p10(style="background:#08364b;border-bottom:5px solid #8bc34a;")

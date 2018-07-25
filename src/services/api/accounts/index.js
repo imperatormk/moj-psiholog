@@ -7,6 +7,9 @@ export default function () {
         .then((resp) => {
           return resp.data
         })
+        .catch((err) => {
+          return err
+        })
     },
     confirmAccount(data) {
       return http.api.post('accounts/confirm', data)

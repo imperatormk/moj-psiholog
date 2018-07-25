@@ -2,7 +2,7 @@
   v-layout(row wrap)
     v-flex(xs12 sm12 md4 column align-center justify-space-between).p20.sidebar.border-right.font-white
       v-avatar(:size="200" color="grey lighten-4")
-        img(:src="blog.poster.avatar")
+        img(:src="blog.poster.details.avatar")
       .p10
         h1 {{ blog.poster.name }}
         br

@@ -15,7 +15,6 @@ export default {
         this.docProp = {
           ...doctor,
           totalSessions: 14,
-          sessionRate: 40,
           rating: 4.7,
           reviews: [{
             id: 1,
