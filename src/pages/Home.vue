@@ -1,28 +1,21 @@
 <template lang="pug">
   div
     Intro
-    .p10(v-if="hasDoctors")
-      v-layout(row wrap)
-        DoctorCard(v-for="doc in docs" :key="doc.id" :docProp="doc")
+    Doctors(:docs="docs")
 </template>
 
 <script>
 
 import Intro from '@/components/sections/intro/Intro'
-import DoctorCard from '@/components/doctor-card/DoctorCard'
+import Doctors from '@/components/sections/doctors/Doctors'
 
 export default {
   props: {
     docs: Array
   },
-  computed: {
-    hasDoctors() {
-      return this.docs.length
-    }
-  },
   components: {
     Intro,
-    DoctorCard
+    Doctors
   },
 };
 </script>

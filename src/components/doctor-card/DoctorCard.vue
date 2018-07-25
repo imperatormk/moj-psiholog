@@ -44,7 +44,7 @@ export default {
   }),
   computed: {
     getShortBio() {
-      const limit = 300
+      const limit = 200
       return this.doc.bio.length > limit ? `${this.doc.bio.substring(0, limit)}...` : this.doc.bio
     }
   },
