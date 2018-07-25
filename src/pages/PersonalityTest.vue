@@ -1,5 +1,5 @@
 <template lang="pug">
-  .p10-top
+  div
     QuestionList
 </template>
 

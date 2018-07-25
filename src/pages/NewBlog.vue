@@ -1,5 +1,5 @@
 <template lang="pug">
-  v-container(fluid fill-height style="padding:0")
+  div
     NewBlog
 </template>
 <script>

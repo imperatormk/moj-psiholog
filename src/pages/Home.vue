@@ -1,7 +1,6 @@
 <template lang="pug">
-  v-container(fluid style="padding:0")
-    div
-      Intro
+  div
+    Intro
     .p10(v-if="hasDoctors")
       v-layout(row wrap)
         DoctorCard(v-for="doc in docs" :key="doc.id" :docProp="doc")

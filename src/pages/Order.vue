@@ -1,5 +1,5 @@
 <template lang="pug">
-  div
+  v-layout(row wrap)
     .purchase-box.br30.p40(v-if="sessionData")
       .flex-col
         h1 Confirm your session

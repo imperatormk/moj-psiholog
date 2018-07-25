@@ -7,7 +7,7 @@
       .input-icon.flex-row.align-center.justify-center(style="width:50px;")
         v-icon(color="gray") airplay
     .flex-row.justify-start
-      v-btn(color="light-green" :disabled="!isValidEmail" @click="accountSubmit") Submit Now
+      v-btn(color="light-green" outline :disabled="!isValidEmail" @click="accountSubmit") Submit Now
 </template>
 
 <script>

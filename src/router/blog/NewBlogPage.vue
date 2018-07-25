@@ -1,5 +1,5 @@
 <template lang="pug">
-Page(:loginReq="true")
+Page(:loginReq="true" :roles="['doctor']")
   NewBlog
 </template>
 <script>

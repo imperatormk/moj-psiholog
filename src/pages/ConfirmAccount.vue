@@ -1,10 +1,9 @@
 <template lang="pug">
-  v-container(fluid style="padding:0")
-    v-layout(row wrap)
-      v-flex.p20(v-if="state.valid" xs12 sm12 md12 column align-center justify-space-between)
-        ManagePw(:isExisting="false" @passChanged="confirmAccount($event)")
-      div(v-else)
-        .fs20 Invalid token, sorry...
+  v-layout(row wrap)
+    v-flex.p20(v-if="state.valid" xs12 sm12 md12 column align-center justify-space-between)
+      ManagePw(:isExisting="false" @passChanged="confirmAccount($event)")
+    div(v-else)
+      .fs20 Invalid token, sorry...
 </template>
 
 <script>

@@ -1,9 +1,6 @@
 <template lang="pug">
   v-app
-    v-snackbar(v-model="alert.show"
-      top
-      multi-line
-      :timeout="alert.timeout")
+    v-snackbar(v-model="alert.show" top multi-line :timeout="alert.timeout")
       span {{ alert.message }}
     v-toolbar.sticky(app color="blue-grey darken-3")
       v-toolbar-title
@@ -27,13 +24,16 @@
               v-list-tile
                 v-btn(flat @click="logout()") Log out
     v-content(style="padding:0")
-      v-container(fluid style="padding:0")
-        .fit(v-if="isConnected && isLoaded")
-          slot(v-if="!loginReq || isLoggedIn")
-          LoginPanel(v-else-if="loginReq && !isLoggedIn")
-        .align-center.justify-center(v-else)
-          .p10
-            h1 Connecting or loading or something else...
+      v-container(fluid fill-height style="padding:0")
+        .fit(v-if="isAllowed")
+          .fit(v-if="isConnected && isLoaded")
+            slot(v-if="!loginReq || isLoggedIn")
+            LoginPanel(v-else-if="loginReq && !isLoggedIn")
+          .align-center.justify-center(v-else)
+            .p10
+              h1 Connecting or loading or something else...
+        .fit(v-else)
+          h1 Not allowed, sorry...
 </template>
 
 <script>
@@ -46,7 +46,11 @@ export default {
       type: Boolean,
       default: false
     },
-    loaded: { // TODO: implement this
+    roles: { // TODO: implement this
+      type: Array,
+      default: null
+    },
+    loaded: { // TODO: implement this - done?
       type: Boolean,
       default: true
     }
@@ -96,7 +100,9 @@ export default {
     onReadyChange(auth) { // ready hmm
       if (auth) {
         this.pageLoadedMaster = false
-        this.$emit('ready')
+        if (this.isAllowed) { // highway to spaghetti
+          this.$emit('ready')
+        }
       } else {
         this.pageLoadedMaster = true
       }
@@ -111,6 +117,9 @@ export default {
     },
     isReady() {
       return this.isLoaded && this.isAuth
+    },
+    isAllowed() {
+      return !this.roles || !this.userType || this.roles.includes(this.userType)
     }
   },
   components: {
