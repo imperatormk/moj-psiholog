@@ -19,7 +19,7 @@
         br
         .fs17 {{ docProp.bio }}
         .p20-top
-        AppointmentPicker(@appointmentPicked="openPurchasePage($event)")
+        AppointmentPicker(v-if="!isDoctor" @appointmentPicked="openPurchasePage($event)")
 </template>
 
 <script>
