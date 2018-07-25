@@ -95,6 +95,9 @@ export default {
       setTimeout(() => {
         this.alert.show = false
         this.alert.message = ''
+        if (this.alert.cb) {
+          this.alert.cb()
+        }
       }, this.alert.duration + 100)
     },
     onReadyChange(auth) { // ready hmm

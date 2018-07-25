@@ -12,7 +12,7 @@
         .p10
           Review(v-for="review in docProp.reviews" :review="review" :key="review.id")
         h4 This doctor has 
-          a {{ docProp.publications.length }} publications
+          a {{ docProp.doctor.blogs.length }} publication(s)
     v-flex(xs12 sm12 md8 column justify-space-between).p30-top.text-left
       .p30-side
         h2 About this doctor

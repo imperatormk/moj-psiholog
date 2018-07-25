@@ -1,5 +1,5 @@
 <template lang="pug">
-Page(:loginReq="true")
+Page(:loaded="loaded")
   Blog(:blog="blog")
 </template>
 <script>
@@ -8,9 +8,13 @@ import Page from '@/components/common/Page'
 import Blog from '@/pages/Blog'
 
 export default {
-  components: {
-    Page,
-    Blog
+  created() {
+    const blogId = this.$route.params.id
+    this.$api.getBlog(blogId)
+      .then((res) => {
+        this.blog = res
+        this.loaded = true
+      })
   },
   data() {
     return {
@@ -23,8 +27,13 @@ export default {
         },
         title: 'My nice blog',
         content: '<h2>H2</h2><h3>H3</h3>'
-      }
+      },
+      loaded: false
     }
+  },
+  components: {
+    Page,
+    Blog
   }
-};
+}
 </script>

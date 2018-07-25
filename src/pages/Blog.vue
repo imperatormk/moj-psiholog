@@ -2,12 +2,12 @@
   v-layout(row wrap)
     v-flex(xs12 sm12 md4 column align-center justify-space-between).p20.sidebar.border-right.font-white
       v-avatar(:size="200" color="grey lighten-4")
-        img(:src="blog.publisher.avatar")
+        img(:src="blog.poster.avatar")
       .p10
-        h1 {{ blog.publisher.name }}
+        h1 {{ blog.poster.name }}
         br
         h4 This doctor has 
-          a {{ blog.publisher.publications.length }} publications
+          a {{ blog.poster.blogs.length }} publication(s)
     v-flex(xs12 sm12 md8 column justify-space-between).p30-top.text-left
       .p30-side
         h2 {{ blog.title }}

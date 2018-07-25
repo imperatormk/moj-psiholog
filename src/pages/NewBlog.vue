@@ -1,14 +1,14 @@
 <template lang="pug">
   div
-    NewBlog
+    NewBlogPanel
 </template>
 <script>
 
-import NewBlog from '@/components/blog/NewBlog'
+import NewBlogPanel from '@/components/blog/NewBlogPanel'
 
 export default {
   components: {
-    NewBlog
+    NewBlogPanel
   }
 }
 </script>

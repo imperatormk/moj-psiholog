@@ -6,7 +6,7 @@ export default [{
   name: 'newBlog',
   component: NewBlogPage
 }, {
-  path: '/blog',
+  path: '/blogs/:id',
   name: 'blog',
   component: BlogPage
 }]

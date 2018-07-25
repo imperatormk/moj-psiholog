@@ -12,15 +12,26 @@ export default {
   data() {
     return {
       title: '',
-      content: '',
+      content: ''
     }
   },
   methods: {
     publishBlog() {
-      console.log(`Title: ${this.title}`)
-      console.log(`Content: ${this.content}`)
-      this.title = ''
-      this.content = ''
+      this.$api.postBlog(this.getContent(), this.userId)
+        .then((resp) => {
+          if (resp.success) {
+            const successMsg = "Blog created successfully!"
+            const failureMsg = 'Oops! Something went wrong... please try again or contact support.'
+
+            this.$messageBus.$emit('alert', {
+              message: resp.success ? successMsg : failureMsg,
+              duration: 2000,
+              cb: () => {
+                this.$router.push({ name: 'blog', params: { id: resp.data.id } })
+              }
+            })
+          }
+        })
     },
     getContent() {
       return {

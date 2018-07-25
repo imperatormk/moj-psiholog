@@ -4,8 +4,9 @@ import accountsApi from './accounts'
 import paymentsApi from './payments'
 import sessionsApi from './sessions'
 import tokensApi from './tokens'
+import blogsApi from './blogs'
 
-export default function () {
+export default function () { // sort alphabetically
   return {
     ...doctorsApi(),
     ...videoChatTokensApi(),
@@ -13,5 +14,6 @@ export default function () {
     ...paymentsApi(),
     ...sessionsApi(),
     ...tokensApi(),
+    ...blogsApi(),
   }
 }
