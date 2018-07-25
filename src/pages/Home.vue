@@ -6,8 +6,8 @@
 
 <script>
 
-import Intro from '@/components/sections/intro/Intro'
-import Doctors from '@/components/sections/doctors/Doctors'
+import Intro from '@/components/sections/Intro'
+import Doctors from '@/components/sections/Doctors'
 
 export default {
   props: {
