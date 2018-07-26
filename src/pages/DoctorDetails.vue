@@ -6,25 +6,25 @@
       .p10
         h1 {{ docProp.name }}
         br
-        h2 Rate: ${{ docProp.sessionRate }}/session
+        h2 Rate: ${{ docProp.price }}/session
         br
         h3 {{ docProp.rating * 20 }}% positive feedback from {{ docProp.totalSessions }} sessions
         .p10
           Review(v-for="review in docProp.reviews" :key="review.id" :review="review")
-        h4 This doctor has 
-          a {{ docProp.blogs.length }} publication(s)
+        span.fs14 This doctor has 
+        a(@click="goToBlogs()") {{ docProp.blogs.length }} publication(s)
     v-flex(xs12 sm12 md8 column justify-space-between).p30-top.text-left
       .p30-side
-        v-tabs(v-model="detailType" dark centered slider-color="light-green")
+        v-tabs(v-model="detailType" slider-color="light-green")
           v-tab(:key="0" ripple)
-            span Bio
+            .p10 Bio
           v-tab-item(:key="0")
             .p20-top
               h2 About this doctor
               br
               .fs17 {{ docProp.bio }}
           v-tab(:key="1" ripple)
-            span Publications
+            .p10 Publications
           v-tab-item(:key="1")
             .p20-top
               h2 Publications from this doctor
@@ -46,9 +46,12 @@ export default {
   props: {
     docProp: {}
   },
+  created() {
+    if (this.$route.query.pub) this.goToBlogs()
+  },
   data() {
     return {
-      detailType: 0
+      detailType: "0"
     }
   },
   methods: {
@@ -67,6 +70,9 @@ export default {
             name: 'order'
           })
         })
+    },
+    goToBlogs() {
+      this.detailType = "1"
     }
   },
   components: {

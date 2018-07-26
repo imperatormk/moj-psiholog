@@ -18,9 +18,6 @@ export default {
       default: () => []
     }
   },
-  created() {
-    console.log(this.blogs)
-  },
   computed: {
     hasBlogs() {
       return this.blogs.length

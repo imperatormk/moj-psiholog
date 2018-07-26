@@ -11,7 +11,6 @@ export default function () {
         return resp.data
       })
       .catch((err) => {
-        console.log(err)
         return new Error(err)
       })
     }
