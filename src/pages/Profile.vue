@@ -16,7 +16,7 @@
         div(v-if="selectedSub === 'doctor-account'")
           DoctorSettings
         div(v-else-if="selectedSub === 'changepw'")
-          ManagePw
+          ManagePw(@passChanged="passChanged($event)")
         div(v-else-if="selectedSub === 'history'")
           ListSessions(listType="history")
         div(v-else-if="selectedSub === 'upcoming'")
@@ -40,7 +40,7 @@ import NewBlogPanel from '@/components/blog/NewBlogPanel'
 
 export default {
   created() {
-    this.selectedSubMenu(this.getItemsForUser[0])
+    this.initMenu()
   },
   data() {
     return {
@@ -51,15 +51,31 @@ export default {
         { id: 'changepw', title: 'Change password', icon: 'dashboard' },
         { id: 'new-blog', title: 'Publish a blog', icon: 'dashboard', for: ['doctor'] },
       ],
-      selectedSub: ""
+      selectedSub: ''
     }
   },
   methods: {
+    initMenu() {
+      this.selectedSubMenu(this.getItemsForUser[0])
+    },
     selectedSubMenu(item){
       this.selectedSub = null
       Vue.nextTick(() => {
         this.selectedSub = item.id
       })
+    },
+    passChanged(reqData) {
+      this.$api.changePassword(reqData)
+        .then((resp) => {
+          const successMsg = "Password changed successfully!"
+          const failureMsg = 'Oops! Something went wrong... please try again or contact support.'
+
+          this.$messageBus.$emit('alert', {
+            message: resp.success ? successMsg : failureMsg,
+            duration: 2500,
+            cb: this.initMenu
+          })
+        })
     }
   },
   computed: {

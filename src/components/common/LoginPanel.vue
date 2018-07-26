@@ -3,8 +3,8 @@
     v-flex(md6)
       .flex-col.space-around.align-center.p20.tiny-border
         h1 Login
-        v-text-field.w100(v-model="creds.email" @keyup.enter="login" hide-details placeholder="Email")
-        v-text-field.w100(v-model="creds.password" @keyup.enter="login" hide-details type="password" placeholder="Password")
+        v-text-field.w100(color="light-green" v-model="creds.email" @keyup.enter="login" hide-details placeholder="Email")
+        v-text-field.w100(color="light-green" v-model="creds.password" @keyup.enter="login" hide-details type="password" placeholder="Password")
         .p10(v-if="error")
           span {{ error }}
         v-btn(@click="login" outline) Login

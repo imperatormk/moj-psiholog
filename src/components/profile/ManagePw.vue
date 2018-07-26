@@ -1,11 +1,11 @@
 <template lang="pug">
   v-layout(row wrap justify-center)
-    v-flex.tiny-border(xs12 sm6 md6 column align-center)
-      v-text-field.p10(placeholder="Enter your current password" hide-details 
-        v-model="passwordData.currentPassword" v-if="isExisting")       
-      v-text-field.p10(placeholder="Enter your new password" hide-details v-model="passwordData.newPassword") 
-      v-text-field.p10(placeholder="Repeat your password" hide-details v-model="passwordData.newPasswordConfirm") 
-      v-btn(outline @click="submitPassword") Submit
+    v-flex.tiny-border(xs12 sm8 md8 column align-center)
+      v-text-field.p10(color="light-green" type="password" @keyup.enter="submitPassword" placeholder="Enter your current password" hide-details 
+        v-model="passwordData.current" v-if="isExisting")       
+      v-text-field.p10(color="light-green" type="password" @keyup.enter="submitPassword" placeholder="Enter your new password" hide-details v-model="passwordData.newA") 
+      v-text-field.p10(color="light-green" type="password" @keyup.enter="submitPassword" placeholder="Repeat your password" hide-details v-model="passwordData.newB") 
+      v-btn(outline :disabled="!isValid" @click="submitPassword") Submit
 </template>
 <script>
 
@@ -19,22 +19,36 @@ export default {
   data() {
     return {
       passwordData: {
-        currentPassword: '',
-        newPassword: '',
-        newPasswordConfirm: ''
+        current: '',
+        newA: '',
+        newB: ''
       }
     }
   },
   methods: {
     submitPassword() {
-      const passObj = {}
-      if (this.isExisting) {
-          passObj.currentPassword = this.passwordData.currentPassword
-          passObj.newPassword = this.passwordData.newPassword
-      } else {
-          passObj.newPassword = this.passwordData.newPassword
+      if (this.isValid) {
+        const reqObj = {}
+        reqObj.email = this.userEmail
+        
+        const passData = {}
+        if (this.isExisting) {
+          passData.current = this.passwordData.current.trim()
+        }
+        passData.newA = this.passwordData.newA.trim()
+        passData.newB = this.passwordData.newB.trim()
+
+        reqObj.passData = passData
+        this.$emit('passChanged', reqObj)
       }
-     this.$emit('passChanged', passObj)
+    }
+  },
+  computed: {
+    isValid() { // may need more validation
+      return this.passwordData.current.trim() &&
+        this.passwordData.newA.trim() &&
+        this.passwordData.newB.trim() &&
+        this.passwordData.newA.trim() === this.passwordData.newB.trim()
     }
   }
 }

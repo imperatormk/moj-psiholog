@@ -8,7 +8,7 @@
         .flex-col
           .p10.fs18(v-html="getShortContent")
           .p10.flex-row.center
-            v-btn.no-margin(:outline="!isHovered" :color="getColor" :visible="isHovered" @click="goToBlog()" @mouseover="isHovered=true" @mouseleave="isHovered=false")
+            v-btn.no-margin(:outline="!isHovered" :color="getColor" :visible="isHovered" @click="goToBlog" @mouseover="isHovered=true" @mouseleave="isHovered=false")
               span Read more
 </template>
 

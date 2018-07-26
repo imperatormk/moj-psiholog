@@ -19,12 +19,12 @@
               span Review and confirm
           v-stepper-content(step="1")
             .center
-              v-text-field(hide-details label="Name" v-model="details.name")
+              v-text-field(color="light-green" hide-details label="Name" v-model="details.name")
           v-stepper-content(step="2")
             wysiwyg.fit(v-model="details.bio")
           v-stepper-content(step="3")
             .center
-              v-text-field(hide-details prefix="$" label="Price/session" v-model.number="details.price" type="number" min="0")
+              v-text-field(color="light-green" hide-details prefix="$" label="Price/session" v-model.number="details.price" type="number" min="0")
           v-stepper-content(step="4")
             .center
               .flex-col(v-if="isValid")
@@ -44,12 +44,12 @@
                 span It seems still have some data left to fill in!
       .flex-col(v-else)
         .flex-row.center.p10-bot.p10-side
-          v-text-field(hide-details label="Name" v-model="details.name")
+          v-text-field(color="light-green" hide-details label="Name" v-model="details.name")
         .flex-col.center.p10
           .fs15.p10 Biography
           wysiwyg.fit(v-model="details.bio")
         .flex-row.center.p10
-          v-text-field(hide-details prefix="$" label="Price/session" v-model.number="details.price" type="number" min="0")
+          v-text-field(color="light-green" hide-details prefix="$" label="Price/session" v-model.number="details.price" type="number" min="0")
         .flex-row.center.p10
           v-btn(outline @click="saveChanges") Save changes
     div(v-else)

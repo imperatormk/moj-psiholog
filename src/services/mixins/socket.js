@@ -54,6 +54,9 @@ export default {
     userType() {
       return this.$store.getters.authData && this.$store.getters.authData.type
     },
+    userEmail() {
+      return this.$store.getters.authData && this.$store.getters.authData.email
+    },
     isDoctor() {
       return this.userType === 'doctor'
     },
