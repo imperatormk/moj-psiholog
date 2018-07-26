@@ -1,29 +1,21 @@
 <template lang="pug">
-div
   v-layout(row wrap)
     v-flex(hidden-sm-and-down md3 column align-center justify-space-between)
       v-navigation-drawer(:value="true" permanent hide-overlay)
-        v-toolbar.transparent
-          v-list.pa-0
-            v-list-tile 
-              v-list-tile-avatar
-                img(src="https://randomuser.me/api/portraits/men/85.jpg")
-              v-list-tile-content
-                v-list-tile-title My profile
         v-list.pt-0
-          v-divider
-          v-list-tile(v-for="item in getItemsForUser" :key="item.title" @click="selectedSubMenu(item)")
+          v-list-tile(v-for="item in getItemsForUser" :key="item.id" :value="item.id" :class="{ highlighted: item.id === selectedSub }" @click="selectedSubMenu(item)")
             v-list-tile-action
-              v-icon {{ item.icon }}
+              v-icon(color="black") {{ item.icon }}
             v-list-tile-content
-              v-list-tile-title {{ item.title }}
+              v-list-tile-title 
+                span.font-black {{ item.title }}
     v-flex(xs12 sm12 md9 column align-center justify-space-between)
       .p20
+        h2 {{ getCurrentTitle }}
+        br
         div(v-if="selectedSub === 'doctor-account'")
           DoctorSettings
         div(v-else-if="selectedSub === 'changepw'")
-          h2 Change password
-          br
           ManagePw
         div(v-else-if="selectedSub === 'history'")
           ListSessions(listType="history")
@@ -31,6 +23,12 @@ div
           ListSessions(listType="upcoming")
         div(v-else-if="selectedSub === 'new-blog'")
           NewBlogPanel
+    v-flex(hidden-md-and-up sm12 xs12 column align-center justify-space-between)
+      div(style="margin-top: 56px;")
+        v-bottom-nav(fixed shift :value="true" :active.sync="selectedSub" style="box-shadow: 0 0 0 0;")
+          v-btn(flat v-for="item in getItemsForUser" :key="item.id" :value="item.id" @click="selectedSubMenu(item)")
+            span {{ item.title }}
+            v-icon {{ item.icon }}
 </template>
 <script>
 
@@ -47,9 +45,9 @@ export default {
   data() {
     return {
       items: [
-        { id: 'doctor-account', title: 'Account settings', icon: 'dashboard', for: ['doctor'] },
-        { id: 'upcoming', title: 'Upcoming Sessions', icon: 'question_answer' },
-        { id: 'history', title: 'Session History', icon: 'question_answer' },
+        { id: 'doctor-account', title: 'Account', icon: 'dashboard', for: ['doctor'] },
+        { id: 'upcoming', title: 'Upcoming', icon: 'question_answer' },
+        { id: 'history', title: 'History', icon: 'question_answer' },
         { id: 'changepw', title: 'Change password', icon: 'dashboard' },
         { id: 'new-blog', title: 'Publish a blog', icon: 'dashboard', for: ['doctor'] },
       ],
@@ -67,6 +65,10 @@ export default {
   computed: {
     getItemsForUser() {
       return this.items.filter(item => !item.for || item.for.includes(this.userType))
+    },
+    getCurrentTitle() {
+      const selection = this.items.find(item => item.id === this.selectedSub)
+      return selection ? selection.title : ''
     }
   },
   components: {

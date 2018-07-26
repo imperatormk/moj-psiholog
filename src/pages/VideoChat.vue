@@ -34,7 +34,7 @@
       v-btn(@click="initEvents()") Reconnect
   div(v-else)
     .p10
-      h3 No session?
+      h2 Uh oh! It doesn't seem that you have an upcoming session at this moment. Sessions usually appear here about 10 minutes before they start.
 </template>
 <script>
 

@@ -1,7 +1,6 @@
 <template lang="pug">
   v-layout(row wrap)
-    v-flex.p20(xs12 sm12 md12 column align-center v-if="isDoctor")
-      h2 Publish New Blog 
+    v-flex(xs12 sm12 md12 column align-center v-if="isDoctor")
       v-text-field.p10(placeholder="Blog title" hide-details v-model="title") 
       wysiwyg.fit(v-model="content")
       .p10

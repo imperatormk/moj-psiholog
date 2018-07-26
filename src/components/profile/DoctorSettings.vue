@@ -43,8 +43,7 @@
               div(v-else)
                 span It seems still have some data left to fill in!
       .flex-col(v-else)
-        h1 Account settings
-        .flex-row.center.p10
+        .flex-row.center.p10-bot.p10-side
           v-text-field(hide-details label="Name" v-model="details.name")
         .flex-col.center.p10
           .fs15.p10 Biography

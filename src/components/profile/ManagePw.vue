@@ -1,10 +1,11 @@
 <template lang="pug">
-  div.tiny-border
-    v-text-field.p10(placeholder="Enter your current password" hide-details v-model="passwordData.currentPassword"
-                              v-if="isExisting")       
-    v-text-field.p10(placeholder="Enter your new password" hide-details v-model="passwordData.newPassword") 
-    v-text-field.p10(placeholder="Repeat your password" hide-details v-model="passwordData.newPasswordConfirm") 
-    v-btn(outline  @click="submitPassword") Submit
+  v-layout(row wrap justify-center)
+    v-flex.tiny-border(xs12 sm6 md6 column align-center)
+      v-text-field.p10(placeholder="Enter your current password" hide-details 
+        v-model="passwordData.currentPassword" v-if="isExisting")       
+      v-text-field.p10(placeholder="Enter your new password" hide-details v-model="passwordData.newPassword") 
+      v-text-field.p10(placeholder="Repeat your password" hide-details v-model="passwordData.newPasswordConfirm") 
+      v-btn(outline @click="submitPassword") Submit
 </template>
 <script>
 

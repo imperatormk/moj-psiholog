@@ -1,13 +1,11 @@
 <template lang="pug">
   .fit
-    h2 {{ getMeta.title }}
-    br
     div(v-if="loaded")
       div(v-if="hasSessions")
         v-expansion-panel(focusable inset)
           SessionDetails(v-for="session in sessionList" :key="session.id" :sessionObj="session")
       div(v-else)
-        p No {{ getMeta.smallCaption }} sessions
+        p No {{ getMeta }} sessions
     div(v-else)
       Loading
 </template>
@@ -46,15 +44,7 @@ export default {
       return this.sessionList.length !== 0
     },
     getMeta() {
-      const upcomingTitle = 'Upcoming sessions'
-      const historyTitle = 'Session history'
-      return this.listType === 'upcoming' ? {
-        title: upcomingTitle,
-        smallCaption: 'upcoming'
-      } : {
-        title: historyTitle,
-        smallCaption: 'past'
-      }
+      return this.listType === 'upcoming' ? 'upcoming' : 'past'
     }
   },
   components: {

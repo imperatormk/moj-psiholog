@@ -2,7 +2,7 @@
   v-app
     v-snackbar(v-model="alert.show" top multi-line :timeout="alert.timeout")
       span {{ alert.message }}
-    v-toolbar.sticky(app color="blue-grey darken-3")
+    v-toolbar.sticky-top(app flat color="blue-grey darken-3")
       v-toolbar-title
         span.hoverable.font-white(@click="goToHome()") Moj Psiholog
       v-spacer
