@@ -3,13 +3,19 @@ import http from '@/services/http'
 export default function () {
   return {
     getBlogs() {
-      return http.api.get(`blogs`)
+      return http.api.get('blogs')
         .then((resp) => {
           return resp.data
         })
     },
     getBlog(blogId) {
       return http.api.get(`blogs/${blogId}`)
+        .then((resp) => {
+          return resp.data
+        })
+    },
+    getBlogByDocId(doctorId) {
+      return http.api.post('blogs/custom', { doctorId })
         .then((resp) => {
           return resp.data
         })

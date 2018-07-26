@@ -1,5 +1,5 @@
 <template lang="pug">
-  v-layout(column wrap v-if="hasDoctors")
+  v-layout(column v-if="hasDoctors")
     span.section-header.p10-top Our staff
     v-layout(row wrap)
       DoctorCard(v-for="doc in docs" :key="doc.id" :docProp="doc")

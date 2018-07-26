@@ -1,19 +1,19 @@
 <template lang="pug">
-  v-flex.p20(xs6 sm6 md3)
-    .tiny-border(style="height:inherit" @mouseover="showBio=true" @mouseleave="showBio=false" @click.stop="")
-      .flex-col.fit.relative
+  v-flex.p20(xs12 sm6 md3)
+    .tiny-border.relative(style="height:inherit" @mouseover="showBio=true" @mouseleave="showBio=false" @click.stop="")
+      .flex-col.fit
         .flex-col.font-white.space-around.h22.p10(style="background:#08364b;border-bottom:5px solid #8bc34a;")
           span.fs21 {{ doc.name }}
           span.fs15 Doctor
         div
           img(src="/static/doc-vector.jpg" style="min-width:100%;max-width:100%;max-height:100%;")
-        transition(name="bounce" enter-active-class="bounceInLeft" leave-active-class="bounceOutRight")
-          .flex-col.overlay(v-if="showBio")
-            .flex-1
-            .flex-col.font-white.space-around.p10.font-white(style="background:#8bc34a;")
-              span.p20.font-paragraph.fs15 {{ getShortBio }}
-            .p10(style="background:white;")
-              v-btn(outline color="light-green" @click="goToDetails()") See availability
+      transition(name="bounce" enter-active-class="bounceInLeft" leave-active-class="bounceOutRight")
+        .flex-col.overlay(v-if="showBio")
+          .flex-1
+          .flex-col.font-white.space-around.p10.font-white(style="background:#8bc34a;")
+            span.p20.font-paragraph.fs15 {{ getShortBio }}
+          .p10(style="background:white;")
+            v-btn(outline color="light-green" @click="goToDetails()") See availability
 </template>
 
 <script>

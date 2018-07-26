@@ -18,32 +18,36 @@ div
             v-list-tile-content
               v-list-tile-title {{ item.title }}
     v-flex(xs12 sm12 md9 column align-center justify-space-between)
-      .p10.p5-left
-        div(v-if="selectedSub === 'changepw'")
+      .p20
+        div(v-if="selectedSub === 'doctor-account'")
+          DoctorSettings
+        div(v-else-if="selectedSub === 'changepw'")
           h2 Change password
           br
           ManagePw
-        div(v-if="selectedSub === 'history'")
+        div(v-else-if="selectedSub === 'history'")
           ListSessions(listType="history")
-        div(v-if="selectedSub === 'upcoming'")
+        div(v-else-if="selectedSub === 'upcoming'")
           ListSessions(listType="upcoming")
-        div(v-if="selectedSub === 'new-blog'")
+        div(v-else-if="selectedSub === 'new-blog'")
           NewBlogPanel
 </template>
 <script>
 
 import Vue from 'vue'
+import DoctorSettings from '@/components/profile/DoctorSettings'
 import ManagePw from '@/components/profile/ManagePw'
 import ListSessions from '@/components/profile/ListSessions'
 import NewBlogPanel from '@/components/blog/NewBlogPanel'
 
 export default {
   created() {
-    this.selectedSubMenu(this.items[0])
+    this.selectedSubMenu(this.getItemsForUser[0])
   },
   data() {
     return {
       items: [
+        { id: 'doctor-account', title: 'Account settings', icon: 'dashboard', for: ['doctor'] },
         { id: 'upcoming', title: 'Upcoming Sessions', icon: 'question_answer' },
         { id: 'history', title: 'Session History', icon: 'question_answer' },
         { id: 'changepw', title: 'Change password', icon: 'dashboard' },
@@ -66,6 +70,7 @@ export default {
     }
   },
   components: {
+    DoctorSettings,
     ManagePw,
     ListSessions,
     NewBlogPanel

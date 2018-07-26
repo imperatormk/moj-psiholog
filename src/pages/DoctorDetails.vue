@@ -10,31 +10,56 @@
         br
         h3 {{ docProp.rating * 20 }}% positive feedback from {{ docProp.totalSessions }} sessions
         .p10
-          Review(v-for="review in docProp.reviews" :review="review" :key="review.id")
+          Review(v-for="review in docProp.reviews" :key="review.id" :review="review")
         h4 This doctor has 
-          a {{ docProp.doctor.blogs.length }} publication(s)
+          a {{ docProp.blogs.length }} publication(s)
     v-flex(xs12 sm12 md8 column justify-space-between).p30-top.text-left
       .p30-side
-        h2 About this doctor
-        br
-        .fs17 {{ docProp.bio }}
-        .p20-top
-        AppointmentPicker(v-if="!isDoctor" @appointmentPicked="openPurchasePage($event)")
+        v-tabs(v-model="detailType" dark centered slider-color="light-green")
+          v-tab(:key="0" ripple)
+            span Bio
+          v-tab-item(:key="0")
+            .p20-top
+              h2 About this doctor
+              br
+              .fs17 {{ docProp.bio }}
+          v-tab(:key="1" ripple)
+            span Publications
+          v-tab-item(:key="1")
+            .p20-top
+              h2 Publications from this doctor
+              br
+              v-layout(row wrap)
+                BlogCard(v-for="blog in docProp.blogs" :key="blog.id" :blogProp="blog" :itemsPerRow="2")
+        div(v-if="!isDoctor")
+          .p20-top
+          AppointmentPicker(@appointmentPicked="openPurchasePage($event)")
 </template>
 
 <script>
 
 import AppointmentPicker from '@/components/appointment-picker/AppointmentPicker'
 import Review from '@/components/reviews/Review'
+import BlogCard from '@/components/blog-card/BlogCard'
 
 export default {
   props: {
     docProp: {}
   },
+  data() {
+    return {
+      detailType: 0
+    }
+  },
   methods: {
     openPurchasePage(pickedTime) {
       this.$store.dispatch('pendPurchase', {
-        doctor: this.docProp, // this is probably temp
+        doctor: {
+          id: this.docProp.doctorId,
+          name: this.docProp.name,
+          avatar: this.docProp.avatar,
+          price: this.docProp.price,
+        },
         ...pickedTime
       })
         .then(() => {
@@ -46,7 +71,8 @@ export default {
   },
   components: {
     AppointmentPicker,
-    Review
+    Review,
+    BlogCard
   }
 };
 </script>

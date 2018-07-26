@@ -1,20 +1,28 @@
 <template lang="pug">
-  v-flex.p20(xs6 sm6 md3)
-    .tiny-border(style="height:inherit" @mouseover="isHovered=true" @mouseleave="isHovered=false" @click.stop="")
+  v-flex.p20(xs12 sm6 :md3="itemsPerRow === 4" :md6="itemsPerRow === 2")
+    .tiny-border(style="height:inherit" @click.stop="")
       .flex-col.fit
         .flex-col.font-white.space-around.h22.p10(style="background:#08364b;border-bottom:5px solid #8bc34a;")
           span.fs21 {{ blog.title }}
-        div
-          img(src="/static/doc-vector.jpg" style="min-width:100%;max-width:100%;max-height:100%;")
       v-fade-transition
-        .p10
-          v-btn(:outline="!isHovered" :color="getColor" :visible="isHovered" @click="goToBlog()") Read more
+        .flex-col
+          .p10.fs18(v-html="getShortContent")
+          .p10.flex-row.center
+            v-btn.no-margin(:outline="!isHovered" :color="getColor" :visible="isHovered" @click="goToBlog()" @mouseover="isHovered=true" @mouseleave="isHovered=false")
+              span Read more
 </template>
 
 <script>
 export default {
   props: {
-    blogProp: {}
+    blogProp: {
+      type: Object,
+      required: true
+    },
+    itemsPerRow: {
+      type: Number,
+      default: 4
+    }
   },
   created() {
     this.blog = { ...this.blogProp }
@@ -37,8 +45,8 @@ export default {
   computed: {
     getShortContent() {
       const limit = 200
-      const content = this.blogProp.content
-      return content.length > limit ? `${content.substring(0, limit)}...` : content
+      const content = this.blogProp.content.replace('<br>', '')
+      return content.length > limit ? `${content.substring(0, limit)}` : content
     },
     getColor() {
       const colorA = 'black'

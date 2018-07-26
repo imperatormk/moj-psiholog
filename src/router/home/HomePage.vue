@@ -10,7 +10,7 @@ import Home from '@/pages/Home'
 
 export default {
   created() {
-    Promise.all([this.$api.getDoctors(), this.$api.getBlogs()])
+    Promise.all([this.$api.getDoctors(true), this.$api.getBlogs()])
       .then(res => {
         const docs = res[0]
         const blogs = res[1]

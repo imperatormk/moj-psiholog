@@ -11,9 +11,12 @@
     div(v-else)
       Loading
 </template>
+
 <script>
+
 import SessionDetails from '@/components/session/SessionDetails'
-import Loading from "@/components/common/Loading"
+import Loading from '@/components/common/Loading'
+
 export default {
   props: {
     listType: {

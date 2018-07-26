@@ -1,5 +1,5 @@
 <template lang="pug">
-  v-layout(column wrap v-if="hasBlogs")
+  v-layout(column v-if="hasBlogs")
     span.section-header.p10-top Latest publications
     v-layout(row wrap)
       BlogCard(v-for="blog in blogs" :key="blog.id" :blogProp="blog")

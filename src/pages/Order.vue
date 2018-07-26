@@ -69,7 +69,7 @@ export default {
     proceedToCheckout() {
       const reqObj = {
         "sessionData": {
-          "doctorId": this.sessionData.doctor.doctor.id, // haha lol
+          "doctorId": this.sessionData.doctor.id,
           "patientId": this.userId,
           "datetime": this.getSqlDate
         }
