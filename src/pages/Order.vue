@@ -2,25 +2,20 @@
   v-layout(row wrap justify-center xs12 sm12 md8)
     v-flex(align-center justify-space-between)
       .purchase-box.br30.p40(v-if="sessionData")
-        v-flex(xs12 sm12 md12 align-center justify-space-between)
+        v-flex(xs12 sm12 md12 row align-center justify-space-between)
           h1 Confirm your session
           br
-          v-layout(row wrap)
-            v-layout(xs12 sm12 md6 column align-center justify-center)
+          v-layout(row wrap fill-height)
+            v-flex(xs12 sm12 md6 column align-center justify-center fill-height)
               v-avatar(:size="200" color="grey lighten-4")
                 img(:src="sessionData.doctor.avatar")
-              span.fs25.p10-top {{ sessionData.doctor.name }}
-            v-layout(xs12 sm12 md6 column align-center justify-space-between fill-height)
-              v-flex
-                .flex-col.align-end.text-right
-                  span.fs20 {{ getScheduledTime }}
-                  span.fs20 ${{ sessionData.doctor.price }}
-                .flex-col.space-around.align-end.text-right
-                  .flex-col.w100.justify-center
-                    .flex-row.self-end.align-center.p5(title="Optionally get an email reminder 10 minutes before the session starts")
-                      v-checkbox.defaultw(v-model="sendReminder" hide-details)
-                      span.p5-left Remind me 10 minutes before
-                  v-btn(outline :disabled="requestLoading" @click="proceedToCheckout") Proceed to checkout
+              .fs25.p10-top {{ sessionData.doctor.name }}
+            v-flex(xs12 sm12 md6 column justify-space-around fill-height).text-right
+              .flex-col.align-end
+                span.fs20 {{ getScheduledTime }}
+                span.fs20 ${{ sessionData.doctor.price }}
+              .flex-col.align-end
+                v-btn.no-margin(outline :disabled="requestLoading" @click="proceedToCheckout") Proceed to checkout
       div(v-else)
         h1 Oops, that's not a valid request. Please redo your action or alternatively contact support for help.
 </template>
