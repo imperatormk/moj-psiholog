@@ -19,6 +19,8 @@ import './style/main.scss'
 import wysiwyg from 'vue-wysiwyg'
 import 'vue-wysiwyg/dist/vueWysiwyg.css'
 
+import 'vue2-animate/dist/vue2-animate.min.css'
+
 Vue.config.productionTip = false
 
 Vue.use(VueSocketCluster, {

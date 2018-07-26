@@ -6,7 +6,7 @@
           span.fs21 {{ blog.title }}
         div
           img(src="/static/doc-vector.jpg" style="min-width:100%;max-width:100%;max-height:100%;")
-      v-slide-fade-transition
+      v-fade-transition
         .p10
           v-btn(:outline="!isHovered" :color="getColor" :visible="isHovered" @click="goToBlog()") Read more
 </template>

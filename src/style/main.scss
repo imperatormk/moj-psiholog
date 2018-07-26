@@ -213,9 +213,22 @@
   top: 0px;
 }
 
+.relative {
+  position: relative;
+}
+
 .section-header {
   letter-spacing: 2px;
   font-weight: bold;
   text-transform: uppercase;
   font-size: 30px;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  height: 100%;
+  width: 100%;
 }
