@@ -12,7 +12,7 @@
         .p10
           Review(v-for="review in docProp.reviews" :key="review.id" :review="review")
         span.fs14 This doctor has 
-        a(@click="goToBlogs()") {{ docProp.blogs.length }} publication(s)
+        a(@click="goToBlogs") {{ docProp.blogs.length }} publication(s)
     v-flex(xs12 sm12 md8 column justify-space-between).p30-top.text-left
       .p30-side
         v-tabs(v-model="detailType" slider-color="light-green")

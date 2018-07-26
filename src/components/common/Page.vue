@@ -4,14 +4,14 @@
       span {{ alert.message }}
     v-toolbar.sticky-top(app flat color="blue-grey darken-3")
       v-toolbar-title
-        span.hoverable.font-white(@click="goToHome()") Moj Psiholog
+        span.hoverable.font-white(@click="goToHome") Moj Psiholog
       v-spacer
       v-toolbar-items
-        v-btn(@click="goToHome()" flat)
+        v-btn(@click="goToHome" flat)
           span.font-white Home
         v-btn(@click="navigateTo('video-chat')" flat)
           span.font-white Video Chat
-        v-btn(flat v-if="!isLoggedIn" @click="goToLogin()")
+        v-btn(flat v-if="!isLoggedIn" @click="goToLogin")
           span.font-white Log in
         .flex-col.space-around(v-if="isLoggedIn")
           v-menu(v-model="showDropdown" offset-y)
@@ -22,7 +22,7 @@
               v-list-tile
                 v-btn(flat @click="navigateTo('profile')") My Profile
               v-list-tile
-                v-btn(flat @click="logout()") Log out
+                v-btn(flat @click="logout") Log out
     v-content(style="padding:0")
       v-container(fluid fill-height style="padding:0")
         .fit(v-if="isAllowed")

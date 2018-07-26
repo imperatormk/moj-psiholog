@@ -1,11 +1,11 @@
 <template lang="pug">
   v-layout(row wrap)
     v-flex(xs12 sm12 md4 column align-center justify-space-between).p20.sidebar.border-right.font-white
-      v-avatar.hoverable(@click="goToBlogs()" :size="200" color="grey lighten-4")
+      v-avatar.hoverable(@click="goToBlogs" :size="200" color="grey lighten-4")
         img(:src="blog.poster.details.avatar")
       .p10
         h1
-          a(@click="goToBlogs()") {{ blog.poster.details.name }}
+          a(@click="goToBlogs") {{ blog.poster.details.name }}
         div(v-if=" blog.poster.blogs.length > 1")
           span.fs15 This doctor has 
           a.fs15(@click="goToBlogs(true)") {{ blog.poster.blogs.length - 1 }} other publication(s)

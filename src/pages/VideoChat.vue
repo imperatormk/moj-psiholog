@@ -24,14 +24,14 @@
             template(v-else)
               .p10(v-if="!established")
                 h3 Patient connected
-                v-btn(@click="callPatient()") Call
+                v-btn(@click="callPatient") Call
               .p10(v-else)
-                v-btn(@click="finishSession()") Finish session
+                v-btn(@click="finishSession") Finish session
           br
     div(v-else)
       .p10
         h3 You are not connected to chat
-      v-btn(@click="initEvents()") Reconnect
+      v-btn(@click="initEvents") Reconnect
   div(v-else)
     .p10
       h2 Uh oh! It doesn't seem that you have an upcoming session at this moment. Sessions usually appear here about 10 minutes before they start.

@@ -1,5 +1,5 @@
 <template lang="pug">
-Page(:loginReq="true" :loaded="loaded" @ready="init()")
+Page(:loginReq="true" :loaded="loaded" @ready="init")
   div(v-if="!sessionFinished")
     VideoChat(v-if="success" :sessionProp="session" @sessionFinished="sessionFinished = true")
     div(v-else)
