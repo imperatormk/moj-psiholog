@@ -3,8 +3,7 @@
     .fs20 {{ question.title }}
     v-radio-group(:value="selectedAnswerIndex" @change="onChange($event)")
       v-radio(v-for="(answer, index) in question.answers" :label="answer.title" :value="index" :key="index") 
-    span(v-if="selectedAnswerIndex !== null") Selected answer points is {{ getSelectedQuestion.points }}
-    span(v-if="question.triggerError") Gospodineee me zaborajvteee
+    span(v-if="question.triggerError" style="color:red") Please answer this question
 </template>
 <script>
 export default {

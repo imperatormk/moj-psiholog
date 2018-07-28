@@ -5,6 +5,7 @@ import paymentsApi from './payments'
 import sessionsApi from './sessions'
 import tokensApi from './tokens'
 import blogsApi from './blogs'
+import testApi from './tests'
 
 export default function () { // sort alphabetically
   return {
@@ -15,5 +16,6 @@ export default function () { // sort alphabetically
     ...sessionsApi(),
     ...tokensApi(),
     ...blogsApi(),
+    ...testApi(),
   }
 }

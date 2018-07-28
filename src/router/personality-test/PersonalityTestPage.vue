@@ -1,6 +1,6 @@
 <template lang="pug">
-Page
-  PersonalityTest
+  Page(:loginReq="true")
+    PersonalityTest
 </template>
 <script>
 
