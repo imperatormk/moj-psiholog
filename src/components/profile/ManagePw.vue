@@ -1,5 +1,5 @@
 <template lang="pug">
-  v-layout(row wrap justify-center)
+  v-layout(row wrap justify-center style="height: inherit")
     v-flex.tiny-border(xs12 sm8 md8 column align-center)
       v-text-field.p10(color="light-green" type="password" @keyup.enter="submitPassword" placeholder="Enter your current password" hide-details 
         v-model="passwordData.current" v-if="isExisting")       
@@ -45,10 +45,13 @@ export default {
   },
   computed: {
     isValid() { // may need more validation
-      return this.passwordData.current.trim() &&
-        this.passwordData.newA.trim() &&
-        this.passwordData.newB.trim() &&
-        this.passwordData.newA.trim() === this.passwordData.newB.trim()
+      const condition = 
+        (!this.isExisting || !!this.passwordData.current.trim())
+        && !!this.passwordData.newA.trim()
+        && !!this.passwordData.newB.trim()
+        && !!(this.passwordData.newA.trim() === this.passwordData.newB.trim())
+      
+      return condition
     }
   }
 }

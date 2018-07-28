@@ -1,9 +1,12 @@
 <template lang="pug">
   v-layout(row wrap)
-    v-flex.p20(v-if="state.valid" xs12 sm12 md12 column align-center justify-space-between)
+    v-flex.p20(v-if="state.valid" xs12 sm12 md12 column align-center justify-center)
+      .p20
+        h2 Confirm your account
+        h4 Create a password so we can get started
       ManagePw(:isExisting="false" @passChanged="confirmAccount($event)")
-    div(v-else)
-      .fs20 Invalid token, sorry...
+    .p20.text-center.w100(v-else)
+      .fs22 Invalid token, sorry...
 </template>
 
 <script>
@@ -28,12 +31,17 @@ export default {
     confirmAccount(passwordData) {
       const confirmObj = {
         token: this.state.token,
-        password: passwordData.newPassword
+        password: passwordData.passData.newA
       }
+
       this.$api.confirmAccount(confirmObj)
         .then(res => {
           if (res.success) {
-            this.$router.push({ name: 'login' })
+            if (!isLoggedIn) { // workaround
+              this.$router.push({ name: 'login' })
+            } else {
+              this.$router.push({ name: 'home' })
+            }
           }
         })
     }

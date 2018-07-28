@@ -51,7 +51,7 @@
         .flex-row.center.p10
           v-text-field(color="light-green" hide-details prefix="$" label="Price/session" v-model.number="details.price" type="number" min="0")
         .flex-row.center.p10
-          v-btn(outline @click="saveChanges") Save changes
+          v-btn(outline :disabled="!isValid" @click="saveChanges") Save changes
     div(v-else)
       Loading
 </template>
@@ -84,8 +84,17 @@ export default { // TODO: avatar
     saveChanges() {
       if (this.isValid) {
         this.$api.updateDoctor(this.userId, this.details)
-          .then((res) => {
-            if (res.success) this.details.ready = true
+          .then((resp) => {
+            const successMsg = "You have updated your data successfully!"
+            const failureMsg = 'Oops! Something went wrong... please try again or contact support.'
+
+            this.$messageBus.$emit('alert', {
+              message: resp.success ? successMsg : failureMsg,
+              duration: 2000,
+              cb: () => {
+                if (resp.success) this.details.ready = true
+              }
+            })
           })
       }
     }
@@ -96,11 +105,13 @@ export default { // TODO: avatar
     },
     isValid() {
       let valid = true
-      const exceptions = ['ready']
+      const exceptions = ['ready', 'avatar']
 
       Object.keys(this.details).forEach(key => {
         if (!exceptions.includes(key)) {
-          if (!this.details[key]) valid = false
+          if (!this.details[key]) {
+            valid = false
+          }
         }
       })
 
