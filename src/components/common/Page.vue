@@ -31,7 +31,7 @@
             LoginPanel(v-else-if="loginReq && !isLoggedIn")
           .align-center.justify-center(v-else)
             .p10
-              h1 Connecting or loading or something else...
+              Loading
         .fit(v-else)
           h1 Not allowed, sorry...
 </template>
@@ -39,6 +39,7 @@
 <script>
 
 import LoginPanel from '@/components/common/LoginPanel'
+import Loading from '@/components/common/Loading'
 
 export default {
   props: {
@@ -126,7 +127,8 @@ export default {
     }
   },
   components: {
-    LoginPanel
+    LoginPanel,
+    Loading
   }
 }
 </script>
