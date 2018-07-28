@@ -10,6 +10,8 @@
 </template>
 
 <script>
+import moment,{ min } from 'moment'
+
 export default {
   props: {
     theme: {
@@ -38,18 +40,18 @@ export default {
       // console.log(ev)
     },
     appointmentPicked(time) {
+      const datetime = moment
       this.$emit('appointmentPicked', {
         date: this.pickedDate,
-        time
+        time: `${this.getPaddedWithZero(time.hour)}:${this.getPaddedWithZero(time.minute)}`
       })
     },
-    getCurrentDate() { // install moment?
-      const currentDate = new Date()
-      const day = currentDate.getDate() > 10 ? currentDate.getDate() : `0${currentDate.getDate()}`
-      const month = currentDate.getMonth() + 1 > 10 ? currentDate.getMonth() + 1  : `0${currentDate.getMonth() + 1}`
-      const year = currentDate.getFullYear()
-
-      return `${year}-${month}-${day}`
+    getPaddedWithZero(val) {
+      if (val < 10) return `0${val}`
+      return val
+    },
+    getCurrentDate() {
+      return moment().format('YYYY-MM-DD')
     }
   },
   computed: {

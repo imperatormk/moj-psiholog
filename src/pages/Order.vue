@@ -21,6 +21,8 @@
 </template>
 
 <script>
+import moment from 'moment'
+
 export default {
   props: {
     sessionData: {
@@ -34,24 +36,12 @@ export default {
   }),
   computed: {
     getScheduledTime() {
-      const dateArr = this.sessionData.date.split('-')
-      const day = dateArr[2]
-      const month = dateArr[1]
-      const year = dateArr[0]
-      const hour = this.sessionData.time.hour
-      const minute = this.sessionData.time.minute
-
-      return `${day}/${month}/${year} ${hour}:${minute}`
+      const datetime = `${this.sessionData.date} ${this.sessionData.time}`
+      return moment(datetime).format('DD/MM/YYYY HH:mm')
     },
-    getSqlDate() { // temp?
-      const dateArr = this.sessionData.date.split('-')
-      const day = dateArr[2]
-      const month = dateArr[1]
-      const year = dateArr[0]
-      const hour = this.sessionData.time.hour
-      const minute = this.sessionData.time.minute
-
-      return `${year}-${month}-${day} ${hour}:${minute}:00`
+    getSqlDate() {
+      const datetime = `${this.sessionData.date} ${this.sessionData.time}`
+      return moment(datetime).format('YYYY-MM-DD HH:mm')
     },
     getRequestStatusMessage() {
       const successMsg = 'Your session has been booked! See your email for more details.'
@@ -63,20 +53,26 @@ export default {
   methods: {
     proceedToCheckout() {
       const reqObj = {
-        "sessionData": {
-          "doctorId": this.sessionData.doctor.id,
-          "patientId": this.userId,
-          "datetime": this.getSqlDate
+        sessionData: {
+          doctorId: this.sessionData.doctor.id,
+          patientId: this.userId,
+          datetime: this.getSqlDate
         }
       }
 
       this.requestLoading = true
       this.$api.requestPayment(reqObj)
         .then((res) => {
-          res.success ? this.requestStatus = 'success' : this.requestStatus = 'fail'
-          this.requestLoading = false
+          if (res.success) {
+            this.requestStatus = 'success'
+          } else {
+            this.requestStatus = 'fail'
+            this.requestLoading = false
+          }
           this.$messageBus.$emit('alert', {
-            message: this.getRequestStatusMessage
+            message: this.getRequestStatusMessage,
+            duration: 4000,
+            cb: () => this.$router.push({ name: 'home' })
           })
         })
     }
