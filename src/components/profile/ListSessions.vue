@@ -3,7 +3,7 @@
     div(v-if="loaded")
       div(v-if="hasSessions")
         v-expansion-panel(focusable inset)
-          SessionDetails(v-for="session in sessionList" :key="session.id" :sessionObj="session")
+          SessionDetails(v-for="session in sortedSessionList" :key="session.id" :sessionObj="session")
       div(v-else)
         p No {{ getMeta }} sessions
     div(v-else)
@@ -45,6 +45,13 @@ export default {
     },
     getMeta() {
       return this.listType === 'upcoming' ? 'upcoming' : 'past'
+    },
+    sortedSessionList() {
+      return this.sessionList.sort((a, b) => {
+        if (a.id < b.id) return 1
+        if (a.id > b.id) return -1
+        return 0
+      })
     }
   },
   components: {

@@ -7,6 +7,7 @@ const CONNECT = 'CONNECT'
 
 const PEND_PURCHASE = 'PEND_PURCHASE'
 const CLEAR_PENDING_PURCHASE = 'CLEAR_PENDING_PURCHASE'
+const UPDATE_HAS_READY = 'UPDATE_HAS_READY'
 
 export default {
   loginAttempt({ commit }) {
@@ -33,4 +34,8 @@ export default {
     commit(CLEAR_PENDING_PURCHASE)
     return Promise.resolve()
   },
+  hasReady({ commit }, hasReady) {
+    commit(UPDATE_HAS_READY, hasReady)
+    return Promise.resolve()
+  }
 }

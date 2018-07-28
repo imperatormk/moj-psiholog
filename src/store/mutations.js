@@ -7,6 +7,7 @@ const CONNECT = 'CONNECT'
 
 const PEND_PURCHASE = 'PEND_PURCHASE'
 const CLEAR_PENDING_PURCHASE = 'CLEAR_PENDING_PURCHASE'
+const UPDATE_HAS_READY = 'UPDATE_HAS_READY'
 
 export default {
   [LOGIN] (state) {
@@ -30,5 +31,8 @@ export default {
   },
   [CLEAR_PENDING_PURCHASE] (state) {
     state.pendingPurchase = null
+  },
+  [UPDATE_HAS_READY] (state, hasReady) {
+    state.hasReady = hasReady
   },
 }

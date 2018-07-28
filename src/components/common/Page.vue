@@ -9,8 +9,8 @@
       v-toolbar-items
         v-btn(@click="goToHome" flat)
           span.font-white Home
-        v-btn(@click="navigateTo('video-chat')" flat)
-          span.font-white Video Chat
+        v-btn(v-if="hasReady" @click="navigateTo('video-chat')" flat)
+          span.font-white Your session
         v-btn(flat v-if="!isLoggedIn" @click="goToLogin")
           span.font-white Log in
         .flex-col.space-around(v-if="isLoggedIn")

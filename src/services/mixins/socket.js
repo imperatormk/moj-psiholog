@@ -65,6 +65,9 @@ export default {
     },
     patientId() {
       return this.isPatient ? `patient-${this.userId}` : null
+    },
+    hasReady() {
+      return this.$store.getters.hasReady
     }
   }
 }

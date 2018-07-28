@@ -10,5 +10,8 @@ export default {
   },
   pendingPurchase: state => {
     return state.pendingPurchase
-  }
+  },
+  hasReady: state => {
+    return state.hasReady
+  },
 }

@@ -40,8 +40,8 @@ export default {
       return moment(datetime).format('DD/MM/YYYY HH:mm')
     },
     getSqlDate() {
-      const datetime = `${this.sessionData.date} ${this.sessionData.time}`
-      return moment(datetime).format('YYYY-MM-DD HH:mm')
+      const datetime = `${this.sessionData.date} ${this.sessionData.time}${this.sessionData.timezone}`
+      return moment(datetime).format('YYYY-MM-DD HH:mmZZ')
     },
     getRequestStatusMessage() {
       const successMsg = 'Your session has been booked! See your email for more details.'
@@ -56,7 +56,8 @@ export default {
         sessionData: {
           doctorId: this.sessionData.doctor.id,
           patientId: this.userId,
-          datetime: this.getSqlDate
+          datetime: this.getSqlDate,
+          price: this.sessionData.doctor.price
         }
       }
 

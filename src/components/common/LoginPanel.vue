@@ -34,9 +34,15 @@ export default {
         password: this.creds.password
       }, (res) => {
         if (!res.success) {
-          this.error = res.msg
+          const messages = { // a better way?
+            invalidCreds: 'Invalid login details, please try again',
+            activateFirst: 'Please activate your account first',
+            alreadyLoggedIn: 'Already logged in'
+          }
+          this.error = messages[res.msg]
+        } else {
+          this.$store.dispatch('login', this.$echoClient.authToken)
         }
-        this.$store.dispatch('login', this.$echoClient.authToken)
       })
     }
   }

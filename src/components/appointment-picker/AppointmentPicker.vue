@@ -4,7 +4,7 @@
     v-spacer
     .w100(v-show="pickedDate")
       .p5.flex-row.space-between.tiny-border
-        .p5-side(v-for="(availableTime, index) in availableTimes" :key="index")
+        .p5-side(v-for="(availableTime, index) in availableTimesNew" :key="index")
           v-chip.hoverable(outline @click="appointmentPicked(availableTime)")
             span.hoverable {{ availableTime.hour }}:{{ availableTime.minute }}
 </template>
@@ -40,18 +40,26 @@ export default {
       // console.log(ev)
     },
     appointmentPicked(time) {
-      const datetime = moment
       this.$emit('appointmentPicked', {
         date: this.pickedDate,
-        time: `${this.getPaddedWithZero(time.hour)}:${this.getPaddedWithZero(time.minute)}`
+        time: `${time.hour}:${time.minute}`,
+        timezone: time.timezone
       })
     },
+    buildDate(date, time) {
+      const dateObj = moment()
+
+    },
     getPaddedWithZero(val) {
+      if (val === 0) return '00'
       if (val < 10) return `0${val}`
       return val
     },
     getCurrentDate() {
       return moment().format('YYYY-MM-DD')
+    },
+    getCurrentTime() {
+      return moment()
     }
   },
   computed: {
@@ -60,6 +68,30 @@ export default {
     },
     isDark() {
       return this.theme === 'dark'
+    },
+    availableTimesNew() {
+      const dateA = this.getCurrentTime().add(12, 'minutes')
+      const dateB = this.getCurrentTime().add(1, 'hours')
+      const dateC = this.getCurrentTime().add(3, 'hours')
+      const dateD = this.getCurrentTime().add(7, 'hours')
+
+      return [{
+        hour: this.getPaddedWithZero(dateA.hours()),
+        minute: this.getPaddedWithZero(dateA.minutes()),
+        timezone: dateA.format('ZZ')
+      }, {
+        hour: this.getPaddedWithZero(dateB.hours()),
+        minute: this.getPaddedWithZero(dateB.minutes()),
+        timezone: dateB.format('ZZ')
+      }, {
+        hour: this.getPaddedWithZero(dateC.hours()),
+        minute: this.getPaddedWithZero(dateC.minutes()),
+        timezone: dateC.format('ZZ')
+      }, {
+        hour: this.getPaddedWithZero(dateD.hours()),
+        minute: this.getPaddedWithZero(dateD.minutes()),
+        timezone: dateD.format('ZZ')
+      }]
     }
   }
 }

@@ -14,7 +14,7 @@
             .p10(v-if="!established")
               h3 Doctor connected, hang on...
           VideoChatContainer(:sessionId="sessionKey")
-          v-btn(@click="disconnect") Disconnect
+          v-btn(outline @click="disconnect") Disconnect
       .p10(v-if="isDoctor")
         .flex-col
           VideoChatContainer(v-if="established" :sessionId="sessionKey")
@@ -24,9 +24,9 @@
             template(v-else)
               .p10(v-if="!established")
                 h3 Patient connected
-                v-btn(@click="callPatient") Call
+                v-btn(outline @click="callPatient") Call
               .p10(v-else)
-                v-btn(@click="finishSession") Finish session
+                v-btn(outline @click="finishSession") Finish session
           br
     div(v-else)
       .p10
