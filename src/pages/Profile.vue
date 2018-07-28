@@ -23,6 +23,9 @@
           ListSessions(listType="upcoming")
         div(v-else-if="selectedSub === 'new-blog'")
           NewBlogPanel
+        div(v-else-if="selectedSub === 'manage-staff'")
+          ManageDoctors
+
     v-flex(hidden-md-and-up sm12 xs12 column align-center justify-space-between)
       div(style="margin-top: 56px;")
         v-bottom-nav(fixed shift :value="true" :active.sync="selectedSub" style="box-shadow: 0 0 0 0;")
@@ -37,6 +40,7 @@ import DoctorSettings from '@/components/profile/DoctorSettings'
 import ManagePw from '@/components/profile/ManagePw'
 import ListSessions from '@/components/profile/ListSessions'
 import NewBlogPanel from '@/components/blog/NewBlogPanel'
+import ManageDoctors from '@/components/profile/admin/manage-doctors/ManageDoctors'
 
 export default {
   created() {
@@ -50,6 +54,7 @@ export default {
         { id: 'history', title: 'History', icon: 'question_answer' },
         { id: 'changepw', title: 'Change password', icon: 'dashboard' },
         { id: 'new-blog', title: 'Publish a blog', icon: 'dashboard', for: ['doctor'] },
+        { id: 'manage-staff', title: 'Manage staff', icon: 'dashboard' }
       ],
       selectedSub: ''
     }
@@ -91,7 +96,8 @@ export default {
     DoctorSettings,
     ManagePw,
     ListSessions,
-    NewBlogPanel
+    NewBlogPanel,
+    ManageDoctors
   }
 };
 </script>

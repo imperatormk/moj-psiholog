@@ -41,7 +41,7 @@ export default {
   },
   computed: {
     hasSessions() {
-      return this.sessionList.length !== 0
+      return this.sessionList.length
     },
     getMeta() {
       return this.listType === 'upcoming' ? 'upcoming' : 'past'
