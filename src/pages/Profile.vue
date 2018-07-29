@@ -28,7 +28,7 @@
         div(v-else-if="selectedSub === 'manage-staff'")
           ManageDoctors
         div(v-else-if="selectedSub === 'personality-test'") 
-          PersonalityTest(:testResults="testResults")
+          PersonalityTest
         div(v-else-if="selectedSub === 'revenue-report'") 
           RevenueReport
     v-flex(hidden-md-and-up sm12 xs12 column align-center justify-space-between)
@@ -50,11 +50,7 @@ import PersonalityTest from '@/pages/PersonalityTest'
 import RevenueReport from '@/components/revenue/RevenueReport'
 
 export default {
-  props: {
-    testResultsProp: Object // not sure about this...
-  },
   created() {
-    if (this.testResultsProp) this.testResults = JSON.parse(JSON.stringify(this.testResultsProp))
     this.initMenu()
   },
   data() {
@@ -70,7 +66,6 @@ export default {
         { id: 'revenue-report', title: 'Revenue report', icon: 'dashboard' },
       ],
       selectedSub: '',
-      testResults: null
     }
   },
   methods: {
@@ -106,7 +101,7 @@ export default {
       return selection ? selection.title : ''
     },
     getTestStatus() {
-      return !this.testResults ? '(pending)' : '(done)'
+      return !this.testResults.id ? '(pending)' : '(done)'
     }
   },
   components: {

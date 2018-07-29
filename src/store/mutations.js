@@ -8,6 +8,7 @@ const CONNECT = 'CONNECT'
 const PEND_PURCHASE = 'PEND_PURCHASE'
 const CLEAR_PENDING_PURCHASE = 'CLEAR_PENDING_PURCHASE'
 const UPDATE_HAS_READY = 'UPDATE_HAS_READY'
+const SAVE_TEST_RESULTS = 'SAVE_TEST_RESULTS'
 
 export default {
   [LOGIN] (state) {
@@ -35,4 +36,7 @@ export default {
   [UPDATE_HAS_READY] (state, hasReady) {
     state.hasReady = hasReady
   },
+  [SAVE_TEST_RESULTS] (state, testResults) {
+    state.testResults = testResults
+  }
 }

@@ -14,4 +14,7 @@ export default {
   hasReady: state => {
     return state.hasReady
   },
+  testResults: state => {
+    return state.testResults
+  },
 }

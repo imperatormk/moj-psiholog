@@ -23,7 +23,7 @@ export default {
     this.$api.getTest().then((testRes) => {
       let questionList = []
 
-      this.$api.getTestResults(this.userId, this.userType)
+      this.getTestResults()
         .then((resultRes) => {
           if (resultRes.id) {
             const resultData = resultRes.data
@@ -59,6 +59,9 @@ export default {
     }
   },
   methods: {
+    getTestResults() { // hah whatever
+      return Promise.resolve(this.testResults)
+    },
     onAnswerChanged(newAnswerData) {
       const answeredQuestion = this.questions.find(question => question.id === newAnswerData.questionId)
       answeredQuestion.selectedAnswerIndex = newAnswerData.newAnswerIndex
@@ -77,14 +80,18 @@ export default {
           const successMsg = 'Test submitted succsesfully.'
           const failureMsg = 'Oops! Something went wrong... please try again or contact support.'
 
+          if (resp.success) { // ugh maybe take this outta here
+            this.$api.getTestResults(this.userId, this.userType)
+              .then(res => {
+                if (res.id) {
+                  this.$store.dispatch('saveTestResults', res)
+                }
+              })
+          }
+
           this.$messageBus.$emit('alert', {
             message: resp.success ? successMsg : failureMsg,
-            duration: 2500,
-            cb: () => {
-              if (resp.success) {
-                this.$emit('testSubmitted')
-              }
-            }
+            duration: 2500
           })
         })
       } else {

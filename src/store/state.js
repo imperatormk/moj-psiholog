@@ -3,4 +3,5 @@ export default {
   isConnected: false,
   pendingPurchase: null,
   hasReady: false,
+  testResults: {},
 }

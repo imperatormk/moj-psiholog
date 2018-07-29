@@ -68,6 +68,9 @@ export default {
     },
     hasReady() {
       return this.$store.getters.hasReady
+    },
+    testResults() { // this is way too global
+      return this.$store.getters.testResults
     }
   }
 }

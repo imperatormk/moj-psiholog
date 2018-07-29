@@ -1,6 +1,6 @@
 <template lang="pug">
 Page(:loginReq="true" @ready="getResults" :loaded="loaded")
-  Profile(:testResultsProp="testResults")
+  Profile
 </template>
 <script>
 
@@ -10,15 +10,16 @@ import Profile from '@/pages/Profile'
 export default {
   data() {
     return {
-      testResults: null,
       loaded: false
     }
   },
   methods: {
-    getResults() { // TODO: reload this sometimes?
+    getResults() {
       this.$api.getTestResults(this.userId, this.userType)
         .then(res => {
-          this.testResults = res.id ? res : null
+          if (res.id) {
+            this.$store.dispatch('saveTestResults', res)
+          }
           this.loaded = true
         })
     }
