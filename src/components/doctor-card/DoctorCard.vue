@@ -10,10 +10,11 @@
       transition(name="bounce" enter-active-class="bounceInLeft" leave-active-class="bounceOutRight")
         .flex-col.overlayz(v-if="showBio")
           .flex-1
-          .flex-col.font-white.space-around.p10.font-white(style="background:#8bc34a;")
-            span.p20.font-paragraph.fs15 {{ getShortBio }}
-          .p10(style="background:white;")
-            v-btn(outline color="light-green" @click="goToDetails") See availability
+          .flex-col.fit.h50
+            .flex-col.fit.font-white.space-around.p10.font-white(style="background:#8bc34a;")
+              span.p20.font-paragraph.fs15 {{ getShortBio }}
+            .p10(style="background:white;")
+              v-btn(outline color="light-green" @click="goToDetails") See availability
 </template>
 
 <script>

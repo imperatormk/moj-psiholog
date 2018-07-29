@@ -1,5 +1,5 @@
 <template lang="pug">
-  div
+  .p10
     .p10(v-if="!started")
       h3 Establishing connection...
     div(v-else)

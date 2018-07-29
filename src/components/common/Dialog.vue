@@ -4,8 +4,8 @@
       <v-slide-y-transition>
         <div>
           <audio ref="audio" loop src="/static/call_incoming.mp3"></audio>
-          <v-card-title class="headline">New call</v-card-title>
-          <v-card-text>You are being called sir</v-card-text>
+          <v-card-title class="headline">New call from doctor</v-card-title>
+          <v-card-text>Accept to begin your session!</v-card-text>
           <v-btn flat @click.native="sendResult(true)">Accept</v-btn>
           <v-btn flat @click.native="sendResult(false)">Decline</v-btn>
         </div>

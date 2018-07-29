@@ -1,8 +1,8 @@
 <template lang="pug">
-.flex-col.fit.align-center.justify-center.p10
-  div(v-if="session")
+.flex-col.fit.align-center.justify-center.p10.font-white
+  .fit(v-if="session")
     .p10
-      h1 Video Chat - Session ID {{ session.id }}
+      h1 Guides and consulting video chat
       Counter(:ongoing="isOngoing")
     div(v-if="connectedToChat")
       .p10(v-if="isPatient")
@@ -14,7 +14,8 @@
             .p10(v-if="!established")
               h3 Doctor connected, hang on...
           VideoChatContainer(:sessionId="sessionKey")
-          v-btn(outline @click="disconnect") Disconnect
+          div
+            v-btn(outline color="white" @click="disconnect") Disconnect
       .p10(v-if="isDoctor")
         .flex-col
           VideoChatContainer(v-if="established" :sessionId="sessionKey")
@@ -24,14 +25,14 @@
             template(v-else)
               .p10(v-if="!established")
                 h3 Patient connected
-                v-btn(outline @click="callPatient") Call
+                v-btn(outline color="white" @click="callPatient") Call
               .p10(v-else)
-                v-btn(outline @click="finishSession") Finish session
+                v-btn(outline color="white" @click="finishSession") Finish session
           br
     div(v-else)
       .p10
         h3 You are not connected to chat
-      v-btn(@click="initEvents") Reconnect
+      v-btn(outline color="white" @click="initEvents") Reconnect
   div(v-else)
     .p10
       h2 Uh oh! It doesn't seem that you have an upcoming session at this moment. Sessions usually appear here about 10 minutes before they start.
