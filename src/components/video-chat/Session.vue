@@ -1,7 +1,7 @@
 <template lang="pug">
   div(id="session" @error="errorHandler")
     .flex-row
-      .flex-1.p10.flex-row.justify-end
+      .flex-1.p10.flex-row.justify-end.align-center
         .flex-col.text-left(v-if="streams.length")
           span.fs16.p5(style="background:#0080ff;padding-left:10px;") {{ getUpperCase(getOtherUserType) }}
           div(id="subscribers" v-for="stream in streams" :key="stream.streamId")

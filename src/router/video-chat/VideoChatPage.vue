@@ -2,9 +2,9 @@
 Page(:loginReq="true" :loaded="loaded" @ready="init" :style="{ background: userId ? '#014051' : 'white' }")
   div(v-if="!sessionFinished")
     VideoChat(v-if="success" :sessionProp="session" @sessionFinished="sessionFinished = true")
-    div(v-else)
+    div.font-white(v-else)
       .p20 This is an error. That's all we know.
-  div(v-else)
+  div.font-white(v-else)
     .p40.fs20 Your session has ended. We hope everything went well and you have had a pleasant experience!
 </template>
 <script>
