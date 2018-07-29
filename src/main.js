@@ -21,7 +21,7 @@ import 'vue-wysiwyg/dist/vueWysiwyg.css'
 
 import 'vue2-animate/dist/vue2-animate.min.css'
 
-Vue.config.productionTip = false
+Vue.config.productionTip = true
 
 Vue.use(VueSocketCluster, {
   connections: [{
