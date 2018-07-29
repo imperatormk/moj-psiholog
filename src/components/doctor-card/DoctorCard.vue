@@ -8,7 +8,7 @@
         div
           img(src="/static/doc-vector.jpg" style="min-width:100%;max-width:100%;max-height:100%;")
       transition(name="bounce" enter-active-class="bounceInLeft" leave-active-class="bounceOutRight")
-        .flex-col.overlay(v-if="showBio")
+        .flex-col.overlayz(v-if="showBio")
           .flex-1
           .flex-col.font-white.space-around.p10.font-white(style="background:#8bc34a;")
             span.p20.font-paragraph.fs15 {{ getShortBio }}

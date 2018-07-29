@@ -6,7 +6,7 @@
           span.fs21 {{ blog.title }}
       v-fade-transition
         .flex-col
-          .p10.fs18(v-html="getShortContent")
+          .p10.fs18.text-break(v-html="getShortContent")
           .p10.flex-row.center
             v-btn.no-margin(outline :color="getColor" :visible="isHovered" @click="goToBlog" @mouseover="isHovered=true" @mouseleave="isHovered=false")
               span Read more
