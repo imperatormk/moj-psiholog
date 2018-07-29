@@ -10,8 +10,8 @@
       v-card
         v-card-text 
           .flex-col.p20-left
-            .p5 Upcoming sessions 5
-            .p5 Completed sessions 5
+            .p5 Upcoming sessions: 2
+            .p5 Completed sessions: 5
 </template>
 <script>
 import moment from 'moment'

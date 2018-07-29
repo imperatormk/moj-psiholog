@@ -22,7 +22,7 @@
             .p20-top
               h2 About this doctor
               br
-              .fs17 {{ docProp.bio }}
+              .fs17(v-html="docProp.bio")
           v-tab(:key="1" ripple)
             .p10 Publications
           v-tab-item(:key="1")
