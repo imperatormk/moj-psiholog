@@ -5,13 +5,13 @@
       .flex-1
         .p10
         Question(@answerChanged="onAnswerChanged($event)" v-for="question in questions" :key="question.id" :question="question")
-        .p10
+        .p10(v-if="!result")
           v-btn(outline @click="submitAnswers") Submit
+        .p10(v-else)
+          span Criteria result here...
       .flex-1
     div(v-else)
-      Loading
-   
-      
+      Loading   
 </template>
 <script>
 import Question from "./Question"
@@ -27,13 +27,21 @@ export default {
           triggerError: false
         }
       })
+
       this.questions = questionList
-      this.loaded = true
+      this.$api.getTestResults(this.userId, this.userType)
+        .then((res) => {
+          if (res.id) {
+            this.result = res
+          }
+          this.loaded = true
+        })
     })
   },  
   data() {
     return {
       questions: [],
+      result: null,
       loaded: false
     }
   },

@@ -12,8 +12,8 @@
           .flex-col.p20-left
             span(v-if="isPatient") With {{ sessionObj.doctor.details.name }}
             .flex-row.align-center(v-if="isDoctor")
-              span With user by email &nbsp;
-              span.br10(style="background:#eeeeee;padding:0 5px;") {{ sessionObj.patient.email }}
+              span With user by email
+              span.br10(style="background:#eeeeee;padding:0 5px;") &nbsp;{{ sessionObj.patient.email }}
             span(v-if="sessionObj.meta") Lasted {{ sessionObj.meta.duration }} seconds
             div
               span(v-if="sessionObj.Payment") {{ getCostsVerb }} ${{ sessionObj.Payment.amount }}

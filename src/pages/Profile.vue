@@ -8,7 +8,9 @@
               v-icon(color="black") {{ item.icon }}
             v-list-tile-content
               v-list-tile-title 
-                span.font-black {{ item.title }}
+                .flex-row
+                  span.font-black {{ item.title }}
+                  span.font-black(v-if="item.id === 'personality-test'") &nbsp;{{ getTestStatus }}
     v-flex(xs12 sm12 md9 column align-center justify-space-between)
       .p20
         h2 {{ getCurrentTitle }}
@@ -25,9 +27,8 @@
           NewBlogPanel
         div(v-else-if="selectedSub === 'manage-staff'")
           ManageDoctors
-        div(v-else-if="isPatient && selectedSub === 'personality-test'") 
-          PersonalityTest
-
+        div(v-else-if="selectedSub === 'personality-test'") 
+          PersonalityTest(:testResults="testResults")
     v-flex(hidden-md-and-up sm12 xs12 column align-center justify-space-between)
       div(style="margin-top: 56px;")
         v-bottom-nav(fixed shift :value="true" :active.sync="selectedSub" style="box-shadow: 0 0 0 0;")
@@ -44,9 +45,14 @@ import ListSessions from '@/components/profile/ListSessions'
 import NewBlogPanel from '@/components/blog/NewBlogPanel'
 import ManageDoctors from '@/components/profile/admin/manage-doctors/ManageDoctors'
 import PersonalityTest from '@/pages/PersonalityTest'
+import { min } from 'moment';
 
 export default {
+  props: {
+    testResultsProp: Object // not sure about this...
+  },
   created() {
+    if (this.testResultsProp) this.testResults = JSON.parse(JSON.stringify(this.testResultsProp))
     this.initMenu()
   },
   data() {
@@ -58,10 +64,10 @@ export default {
         { id: 'changepw', title: 'Change password', icon: 'dashboard' },
         { id: 'new-blog', title: 'Publish a blog', icon: 'dashboard', for: ['doctor'] },
         { id: 'manage-staff', title: 'Manage staff', icon: 'dashboard' },
-        { id: 'personality-test', title: 'Personality test', icon: 'dashboard' }
-
+        { id: 'personality-test', title: 'Personality test', icon: 'dashboard', for: ['patient'] }
       ],
-      selectedSub: ''
+      selectedSub: '',
+      testResults: null
     }
   },
   methods: {
@@ -95,6 +101,9 @@ export default {
     getCurrentTitle() {
       const selection = this.items.find(item => item.id === this.selectedSub)
       return selection ? selection.title : ''
+    },
+    getTestStatus() {
+      return !this.testResults ? '(pending)' : '(done)'
     }
   },
   components: {
