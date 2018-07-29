@@ -4,12 +4,12 @@
       .flex-1
       .flex-1
         .p10
+        .p10.flex-col.text-left(v-if="result")
+          span.fs16 Points: {{ result.points }}
+          span.fs16 Your result: {{ result.result }}
         Question(@answerChanged="onAnswerChanged($event)" v-for="question in questions" :key="question.id" :question="question")
         .p10(v-if="!result")
           v-btn(outline @click="submitAnswers") Submit
-        .p10.flex-col(v-else)
-          span.fs16 Points: {{ result.points }}
-          span.fs16 Your result: {{ result.result }}
       .flex-1
     div(v-else)
       Loading   
@@ -20,36 +20,7 @@ import Loading from '@/components/common/Loading'
 
 export default {
   created() {
-    this.$api.getTest().then((testRes) => {
-      let questionList = []
-
-      this.getTestResults()
-        .then((resultRes) => {
-          if (resultRes.id) {
-            const resultData = resultRes.data
-            this.result = resultData.criteriaResult
-
-            const answers = resultData.answers
-            questionList = testRes.map((question) => {
-              return {
-                ...question,
-                selectedAnswerIndex: answers.find(answer => answer.questionId === question.id).answerIndex,
-              }
-            })
-          } else {
-            questionList = testRes.map((question) => {
-              return {
-                ...question,
-                selectedAnswerIndex: null,
-                triggerError: false
-              }
-            })
-          }
-
-          this.questions = questionList
-          this.loaded = true
-        })
-    })
+    this.initTest()
   },  
   data() {
     return {
@@ -59,6 +30,39 @@ export default {
     }
   },
   methods: {
+    initTest() {
+      this.loaded = false
+      this.$api.getTest().then((testRes) => {
+        let questionList = []
+
+        this.getTestResults()
+          .then((resultRes) => {
+            if (resultRes.id) {
+              const resultData = resultRes.data
+              this.result = resultData.criteriaResult
+
+              const answers = resultData.answers
+              questionList = testRes.map((question) => {
+                return {
+                  ...question,
+                  selectedAnswerIndex: answers.find(answer => answer.questionId === question.id).answerIndex,
+                }
+              })
+            } else {
+              questionList = testRes.map((question) => {
+                return {
+                  ...question,
+                  selectedAnswerIndex: null,
+                  triggerError: false
+                }
+              })
+            }
+
+            this.questions = questionList
+            this.loaded = true
+          })
+      })
+    },
     getTestResults() { // hah whatever
       return Promise.resolve(this.testResults)
     },
@@ -85,6 +89,7 @@ export default {
               .then(res => {
                 if (res.id) {
                   this.$store.dispatch('saveTestResults', res)
+                    .then(() => this.initTest())
                 }
               })
           }

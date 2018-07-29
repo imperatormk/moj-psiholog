@@ -3,5 +3,5 @@ export default {
   isConnected: false,
   pendingPurchase: null,
   hasReady: false,
-  testResults: {},
+  testResults: {}, // way too global
 }
