@@ -37,7 +37,7 @@ export default {
       this.$api.confirmAccount(confirmObj)
         .then(res => {
           if (res.success) {
-            if (!isLoggedIn) { // workaround
+            if (!this.isLoggedIn) { // workaround
               this.$router.push({ name: 'login' })
             } else {
               this.$router.push({ name: 'home' })

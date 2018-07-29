@@ -4,7 +4,7 @@
     v-spacer
     .w100(v-show="pickedDate")
       .p5.flex-row.space-between.tiny-border
-        .p5-side(v-for="(availableTime, index) in availableTimesNew" :key="index")
+        .p5-side(v-for="(availableTime, index) in availableTimes" :key="index")
           v-chip.hoverable(outline @click="appointmentPicked(availableTime)")
             span.hoverable {{ availableTime.hour }}:{{ availableTime.minute }}
 </template>
@@ -23,17 +23,7 @@ export default {
     this.pickedDate = this.getCurrentDate()
   },
   data: () => ({
-    pickedDate: null,
-    availableTimes: [{
-      hour: 6,
-      minute: 30
-    }, {
-      hour: 7,
-      minute: 45
-    }, {
-      hour: 12,
-      minute: 10
-    }]
+    pickedDate: null
   }),
   methods: {
     dateChanged(ev) {
@@ -69,11 +59,10 @@ export default {
     isDark() {
       return this.theme === 'dark'
     },
-    availableTimesNew() {
+    availableTimes() {
       const dateA = this.getCurrentTime().add(12, 'minutes')
       const dateB = this.getCurrentTime().add(1, 'hours')
       const dateC = this.getCurrentTime().add(3, 'hours')
-      const dateD = this.getCurrentTime().add(7, 'hours')
 
       return [{
         hour: this.getPaddedWithZero(dateA.hours()),
@@ -87,10 +76,6 @@ export default {
         hour: this.getPaddedWithZero(dateC.hours()),
         minute: this.getPaddedWithZero(dateC.minutes()),
         timezone: dateC.format('ZZ')
-      }, {
-        hour: this.getPaddedWithZero(dateD.hours()),
-        minute: this.getPaddedWithZero(dateD.minutes()),
-        timezone: dateD.format('ZZ')
       }]
     }
   }

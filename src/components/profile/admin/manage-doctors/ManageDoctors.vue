@@ -44,7 +44,7 @@ export default {
         name: `${doctorObj.name} ${doctorObj.surname}`,
         type: 'doctor'
       }).then((resp) => {
-        const successMsg = "Doctor added succsesfully."
+        const successMsg = "Doctor added successfully."
         const failureMsg = 'Oops! Something went wrong... please try again or contact support.'
 
         this.loadDoctors()

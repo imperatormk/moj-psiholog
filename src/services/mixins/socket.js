@@ -63,6 +63,9 @@ export default {
     isPatient() {
       return this.userType === 'patient'
     },
+    isAdmin() {
+      return this.userType === 'admin'
+    },
     patientId() {
       return this.isPatient ? `patient-${this.userId}` : null
     },

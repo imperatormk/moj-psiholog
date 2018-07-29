@@ -61,9 +61,9 @@ export default {
         { id: 'history', title: 'History', icon: 'question_answer' },
         { id: 'changepw', title: 'Change password', icon: 'dashboard' },
         { id: 'new-blog', title: 'Publish a blog', icon: 'dashboard', for: ['doctor'] },
-        { id: 'manage-staff', title: 'Manage staff', icon: 'dashboard' },
+        { id: 'manage-staff', title: 'Manage staff', icon: 'dashboard', for: ['admin'] },
         { id: 'personality-test', title: 'Personality test', icon: 'dashboard', for: ['patient'] },
-        { id: 'revenue-report', title: 'Revenue report', icon: 'dashboard' },
+        { id: 'revenue-report', title: 'Revenue report', icon: 'dashboard', for: ['admin'] },
       ],
       selectedSub: '',
     }
