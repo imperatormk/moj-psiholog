@@ -20,7 +20,7 @@ import Loading from '@/components/common/Loading'
 export default {
   created() {
     this.$api.getTest().then((res) => {
-      const questionList = res.questions.map((question) => {
+      const questionList = res.map((question) => {
         return {
           ...question,
           selectedAnswerIndex: null,
@@ -60,8 +60,10 @@ export default {
           answerIndex: question.selectedAnswerIndex
         }))
 
+        console.log(JSON.stringify(answersObj))
+
         this.emitAndSub('submitTest', answersObj, (resp) => {
-          const successMsg = 'Test submited succsesfully.'
+          const successMsg = 'Test submitted succsesfully.'
           const failureMsg = 'Oops! Something went wrong... please try again or contact support.'
 
           this.$messageBus.$emit('alert', {
