@@ -12,7 +12,7 @@
           .flex-1
           .flex-col.fit.h50
             .flex-col.fit.font-white.space-around.p10.font-white(style="background:#8bc34a;")
-              span.p20.font-paragraph.fs15 {{ getShortBio }}
+              span.p20.font-paragraph.fs15(v-html="getShortBio")
             .p10(style="background:white;")
               v-btn(outline color="light-green" @click="goToDetails") See availability
 </template>
