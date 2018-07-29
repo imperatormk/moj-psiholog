@@ -7,8 +7,9 @@
         Question(@answerChanged="onAnswerChanged($event)" v-for="question in questions" :key="question.id" :question="question")
         .p10(v-if="!result")
           v-btn(outline @click="submitAnswers") Submit
-        .p10(v-else)
-          span Criteria result here...
+        .p10.flex-col(v-else)
+          span.fs16 Points: {{ result.points }}
+          span.fs16 Your result: {{ result.result }}
       .flex-1
     div(v-else)
       Loading   
@@ -19,21 +20,33 @@ import Loading from '@/components/common/Loading'
 
 export default {
   created() {
-    this.$api.getTest().then((res) => {
-      const questionList = res.map((question) => {
-        return {
-          ...question,
-          selectedAnswerIndex: null,
-          triggerError: false
-        }
-      })
+    this.$api.getTest().then((testRes) => {
+      let questionList = []
 
-      this.questions = questionList
       this.$api.getTestResults(this.userId, this.userType)
-        .then((res) => {
-          if (res.id) {
-            this.result = res
+        .then((resultRes) => {
+          if (resultRes.id) {
+            const resultData = resultRes.data
+            this.result = resultData.criteriaResult
+
+            const answers = resultData.answers
+            questionList = testRes.map((question) => {
+              return {
+                ...question,
+                selectedAnswerIndex: answers.find(answer => answer.questionId === question.id).answerIndex,
+              }
+            })
+          } else {
+            questionList = testRes.map((question) => {
+              return {
+                ...question,
+                selectedAnswerIndex: null,
+                triggerError: false
+              }
+            })
           }
+
+          this.questions = questionList
           this.loaded = true
         })
     })
@@ -60,15 +73,18 @@ export default {
           answerIndex: question.selectedAnswerIndex
         }))
 
-        console.log(JSON.stringify(answersObj))
-
         this.emitAndSub('submitTest', answersObj, (resp) => {
           const successMsg = 'Test submitted succsesfully.'
           const failureMsg = 'Oops! Something went wrong... please try again or contact support.'
 
           this.$messageBus.$emit('alert', {
             message: resp.success ? successMsg : failureMsg,
-            duration: 2500
+            duration: 2500,
+            cb: () => {
+              if (resp.success) {
+                this.$emit('testSubmitted')
+              }
+            }
           })
         })
       } else {
