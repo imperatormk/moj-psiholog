@@ -1,53 +1,40 @@
 <template lang="pug">
-  .flex-row
-    .flex-1
-    .flex-1
-      .p10
-        .fs25 Personality test
-      Question(@answerChanged="onAnswerChanged($event)" v-for="question in questions" :key="question.id" :question="question")
-      .p10
-        v-btn(outline @click="submitAnswers") Submit
-    .flex-1
+  div
+    .flex-row(v-if="loaded")
+      .flex-1
+      .flex-1
+        .p10
+        Question(@answerChanged="onAnswerChanged($event)" v-for="question in questions" :key="question.id" :question="question")
+        .p10
+          v-btn(outline @click="submitAnswers") Submit
+      .flex-1
+    div(v-else)
+      Loading
+   
+      
 </template>
 <script>
 import Question from "./Question"
+import Loading from '@/components/common/Loading'
+
 export default {
-  components: {
-    Question
+  created() {
+    this.$api.getTest().then((res) => {
+      const questionList = res.questions.map((question) => {
+        return {
+          ...question,
+          selectedAnswerIndex: null,
+          triggerError: false
+        }
+      })
+      this.questions = questionList
+      this.loaded = true
+    })
   },  
   data() {
     return {
-      questions: [{
-        id: 1,
-        title: 'How are you',
-        selectedAnswerIndex: null,
-        triggerError: false,
-        answers: [{
-          title: 'fine',
-          points: 3
-        }, {
-          title: 'not good',
-          points: 1
-        }, {
-          title: 'great',
-          points: 5
-        }]
-      }, {
-        id: 2,
-        title: 'How are you tomorrow',
-        selectedAnswerIndex: null,
-        triggerError: false,
-        answers: [{
-          title: 'fine',
-          points: 3
-        }, {
-          title: 'not good',
-          points: 1
-        }, {
-          title: 'great',
-          points: 5
-        }]
-      }]
+      questions: [],
+      loaded: false
     }
   },
   methods: {
@@ -64,7 +51,16 @@ export default {
           questionId: question.id,
           answerIndex: question.selectedAnswerIndex
         }))
-        console.log(answersObj)
+
+        this.emitAndSub('submitTest', answersObj, (resp) => {
+          const successMsg = 'Test submited succsesfully.'
+          const failureMsg = 'Oops! Something went wrong... please try again or contact support.'
+
+          this.$messageBus.$emit('alert', {
+            message: resp.success ? successMsg : failureMsg,
+            duration: 2500
+          })
+        })
       } else {
         this.questions
           .filter(question => question.selectedAnswerIndex === null)
@@ -86,6 +82,10 @@ export default {
     isComplete() {
       return !this.questions.find(question => question.selectedAnswerIndex === null)
     }
+  },
+  components: {
+    Question,
+    Loading
   }
 }
 </script>

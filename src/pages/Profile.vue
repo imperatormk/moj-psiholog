@@ -25,6 +25,8 @@
           NewBlogPanel
         div(v-else-if="selectedSub === 'manage-staff'")
           ManageDoctors
+        div(v-else-if="isPatient && selectedSub === 'personality-test'") 
+          PersonalityTest
 
     v-flex(hidden-md-and-up sm12 xs12 column align-center justify-space-between)
       div(style="margin-top: 56px;")
@@ -41,6 +43,7 @@ import ManagePw from '@/components/profile/ManagePw'
 import ListSessions from '@/components/profile/ListSessions'
 import NewBlogPanel from '@/components/blog/NewBlogPanel'
 import ManageDoctors from '@/components/profile/admin/manage-doctors/ManageDoctors'
+import PersonalityTest from '@/pages/PersonalityTest'
 
 export default {
   created() {
@@ -54,7 +57,9 @@ export default {
         { id: 'history', title: 'History', icon: 'question_answer' },
         { id: 'changepw', title: 'Change password', icon: 'dashboard' },
         { id: 'new-blog', title: 'Publish a blog', icon: 'dashboard', for: ['doctor'] },
-        { id: 'manage-staff', title: 'Manage staff', icon: 'dashboard' }
+        { id: 'manage-staff', title: 'Manage staff', icon: 'dashboard' },
+        { id: 'personality-test', title: 'Personality test', icon: 'dashboard' }
+
       ],
       selectedSub: ''
     }
@@ -97,7 +102,8 @@ export default {
     ManagePw,
     ListSessions,
     NewBlogPanel,
-    ManageDoctors
+    ManageDoctors,
+    PersonalityTest
   }
 };
 </script>
