@@ -4,7 +4,7 @@
       span {{ alert.message }}
     v-toolbar.sticky-top(app flat color="blue-grey darken-3")
       v-toolbar-title
-        span.hoverable.font-white(@click="goToHome") Moj Psiholog
+        span.hoverable.font-white(@click="goToHome") Guides and consulting
       v-spacer
       v-toolbar-items
         v-btn(@click="goToHome" flat)

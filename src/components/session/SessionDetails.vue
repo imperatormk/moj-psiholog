@@ -14,7 +14,7 @@
             .flex-row.align-center(v-if="isDoctor")
               span With user by email
               span.br10(style="background:#eeeeee;padding:0 5px;") &nbsp;{{ sessionObj.patient.email }}
-            span(v-if="sessionObj.meta") Lasted {{ sessionObj.meta.duration }} seconds
+            span(v-if="sessionObj.meta") Lasted {{ getDuration(sessionObj.meta.duration) }}
             div
               span(v-if="sessionObj.Payment") {{ getCostsVerb }} ${{ sessionObj.Payment.amount }}
               v-chip(v-else disabled small outline color="green") Free session
@@ -27,6 +27,14 @@ export default {
     sessionObj: {
       type: Object,
       required: true
+    }
+  },
+  methods: {
+    getDuration(seconds) {
+      const format = seconds >= 3600 ? 'HH:mm:ss' : 'mm:ss'
+      return moment("2015-01-01").startOf('day')
+      .seconds(seconds)
+      .format(format)
     }
   },
   computed: {
